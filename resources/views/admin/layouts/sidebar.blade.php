@@ -1,0 +1,52 @@
+@php
+    $unreadCount = \App\Models\ContactMessage::unread()->count();
+@endphp
+<aside class="sidebar">
+    <div class="sidebar-brand">
+        <div class="logo"><i class="fas fa-code"></i></div>
+        <div>Portfolio Admin</div>
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard*') ? 'active' : '' }}">
+                <i class="fas fa-th-large"></i> Dashboard
+            </a></li>
+
+            <div class="nav-section">Content</div>
+
+            <li><a href="{{ route('admin.about.edit') }}" class="{{ request()->routeIs('admin.about.*') ? 'active' : '' }}">
+                <i class="fas fa-user-circle"></i> Profile / About
+            </a></li>
+
+            <li><a href="{{ route('admin.projects.index') }}" class="{{ request()->routeIs('admin.projects.*') ? 'active' : '' }}">
+                <i class="fas fa-briefcase"></i> Projects
+            </a></li>
+
+            <li><a href="{{ route('admin.skills.index') }}" class="{{ request()->routeIs('admin.skills.*') ? 'active' : '' }}">
+                <i class="fas fa-code"></i> Skills
+            </a></li>
+
+            <li><a href="{{ route('admin.services.index') }}" class="{{ request()->routeIs('admin.services.*') ? 'active' : '' }}">
+                <i class="fas fa-cogs"></i> Services
+            </a></li>
+
+            <li><a href="{{ route('admin.experiences.index') }}" class="{{ request()->routeIs('admin.experiences.*') ? 'active' : '' }}">
+                <i class="fas fa-history"></i> Experience
+            </a></li>
+
+            <li><a href="{{ route('admin.sections.index') }}" class="{{ request()->routeIs('admin.sections.*') ? 'active' : '' }}">
+                <i class="fas fa-layer-group"></i> Custom Sections
+            </a></li>
+
+            <div class="nav-section">Communication</div>
+
+            <li><a href="{{ route('admin.messages.index') }}" class="{{ request()->routeIs('admin.messages.*') ? 'active' : '' }}">
+                <i class="fas fa-envelope"></i> Messages
+                @if($unreadCount > 0)
+                    <span class="badge">{{ $unreadCount }}</span>
+                @endif
+            </a></li>
+        </ul>
+    </nav>
+</aside>

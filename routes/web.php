@@ -1,0 +1,82 @@
+<?php
+
+use App\Http\Controllers\Admin\AboutController as AdminAboutController;
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ExperienceController;
+use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
+use App\Http\Controllers\Admin\SectionController;
+use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\SkillController;
+use App\Http\Controllers\Site\AboutController;
+use App\Http\Controllers\Site\ContactController;
+use App\Http\Controllers\Site\HomeController;
+use App\Http\Controllers\Site\ProjectController;
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Public site routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/about', [AboutController::class, 'show'])->name('about');
+Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+Route::get('/projects/{project:slug}', [ProjectController::class, 'show'])->name('projects.show');
+Route::get('/contact', [ContactController::class, 'show'])->name('contact');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+/*
+|--------------------------------------------------------------------------
+| Admin auth (guests)
+|--------------------------------------------------------------------------
+*/
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::middleware('guest')->group(function () {
+        Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+        Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+    });
+
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Admin protected routes
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware(['auth', 'admin'])->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.alt');
+
+        // Profile / About
+        Route::get('/about', [AdminAboutController::class, 'edit'])->name('about.edit');
+        Route::put('/about', [AdminAboutController::class, 'update'])->name('about.update');
+
+        // Project image deletion - must be BEFORE the resource so 'images' doesn't match as a project ID
+        Route::delete('/projects/images/{image}', [AdminProjectController::class, 'deleteImage'])
+            ->name('projects.images.destroy');
+
+        // Projects CRUD
+        Route::resource('projects', AdminProjectController::class)->except('show');
+
+        // Skills CRUD
+        Route::resource('skills', SkillController::class)->except('show');
+
+        // Experiences CRUD
+        Route::resource('experiences', ExperienceController::class)->except('show');
+
+        // Services CRUD
+        Route::resource('services', ServiceController::class)->except('show');
+
+        // Sections CRUD
+        Route::resource('sections', SectionController::class)->except('show');
+
+        // Contact messages
+        Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+        Route::get('/messages/{message}', [MessageController::class, 'show'])->name('messages.show');
+        Route::post('/messages/{message}/reply', [MessageController::class, 'reply'])->name('messages.reply');
+        Route::post('/messages/{message}/toggle-read', [MessageController::class, 'toggleRead'])->name('messages.toggleRead');
+        Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
+    });
+});
