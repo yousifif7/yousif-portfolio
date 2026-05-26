@@ -13,6 +13,10 @@
                 <i class="fas fa-th-large"></i> Dashboard
             </a></li>
 
+            <li><a href="{{ route('admin.stats.index') }}" class="{{ request()->routeIs('admin.stats.*') ? 'active' : '' }}">
+                <i class="fas fa-chart-line"></i> Visitor Stats
+            </a></li>
+
             <div class="nav-section">Content</div>
 
             <li><a href="{{ route('admin.about.edit') }}" class="{{ request()->routeIs('admin.about.*') ? 'active' : '' }}">
@@ -46,6 +50,12 @@
                 @if($unreadCount > 0)
                     <span class="badge">{{ $unreadCount }}</span>
                 @endif
+            </a></li>
+
+            <div class="nav-section">Configuration</div>
+
+            <li><a href="{{ route('admin.settings.edit') }}" class="{{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
+                <i class="fas fa-sliders-h"></i> Site Settings
             </a></li>
         </ul>
     </nav>

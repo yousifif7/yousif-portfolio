@@ -24,6 +24,7 @@ class Project extends Model
         'is_published',
         'sort_order',
         'views',
+        'unique_views',
     ];
 
     protected $casts = [
@@ -32,6 +33,7 @@ class Project extends Model
         'is_published' => 'boolean',
         'sort_order' => 'integer',
         'views' => 'integer',
+        'unique_views' => 'integer',
     ];
 
     protected static function booted(): void
@@ -53,12 +55,14 @@ class Project extends Model
         return $this->belongsToMany(Skill::class, 'project_skill');
     }
 
+    public function viewLogs(): HasMany
+    {
+        return $this->hasMany(ProjectView::class);
+    }
+
     public function getCoverImageUrlAttribute(): string
     {
-        if ($this->cover_image) {
-            return asset('storage/'.$this->cover_image);
-        }
-        return asset('images/project-placeholder.svg');
+        return \App\Support\PublicUpload::url($this->cover_image, asset('images/project-placeholder.svg'));
     }
 
     public function scopePublished($query)

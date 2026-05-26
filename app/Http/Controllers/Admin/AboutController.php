@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AboutRequest;
 use App\Models\About;
-use Illuminate\Support\Facades\Storage;
+use App\Support\PublicUpload;
 
 class AboutController extends Controller
 {
@@ -21,17 +21,13 @@ class AboutController extends Controller
         $about = About::firstOrNew([]);
 
         if ($request->hasFile('avatar')) {
-            if ($about->avatar) {
-                Storage::disk('public')->delete($about->avatar);
-            }
-            $data['avatar'] = $request->file('avatar')->store('about', 'public');
+            PublicUpload::delete($about->avatar);
+            $data['avatar'] = PublicUpload::store($request->file('avatar'), 'about');
         }
 
         if ($request->hasFile('cv_file')) {
-            if ($about->cv_file) {
-                Storage::disk('public')->delete($about->cv_file);
-            }
-            $data['cv_file'] = $request->file('cv_file')->store('about/cv', 'public');
+            PublicUpload::delete($about->cv_file);
+            $data['cv_file'] = PublicUpload::store($request->file('cv_file'), 'about/cv');
         }
 
         $about->fill($data)->save();

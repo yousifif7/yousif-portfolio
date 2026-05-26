@@ -22,18 +22,15 @@ class About extends Model
         'whatsapp',
         'avatar',
         'cv_file',
-        'github_url',
-        'linkedin_url',
-        'twitter_url',
-        'facebook_url',
-        'instagram_url',
-        'stackoverflow_url',
     ];
 
     public function getAvatarUrlAttribute(): string
     {
-        if ($this->avatar && file_exists(public_path('storage/'.$this->avatar))) {
-            return asset('storage/'.$this->avatar);
+        if ($this->avatar) {
+            $relative = str_starts_with($this->avatar, 'uploads/') ? $this->avatar : 'storage/'.$this->avatar;
+            if (file_exists(public_path($relative))) {
+                return asset($relative);
+            }
         }
 
         return asset('images/default-avatar.png');
@@ -41,10 +38,7 @@ class About extends Model
 
     public function getCvUrlAttribute(): ?string
     {
-        if ($this->cv_file) {
-            return asset('storage/'.$this->cv_file);
-        }
-        return null;
+        return \App\Support\PublicUpload::url($this->cv_file);
     }
 
     public static function current(): ?self

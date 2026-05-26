@@ -7,8 +7,8 @@ use App\Http\Requests\ProjectRequest;
 use App\Models\Project;
 use App\Models\ProjectImage;
 use App\Models\Skill;
+use App\Support\PublicUpload;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -39,7 +39,7 @@ class ProjectController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('cover_image')) {
-            $data['cover_image'] = $request->file('cover_image')->store('projects/covers', 'public');
+            $data['cover_image'] = PublicUpload::store($request->file('cover_image'), 'projects/covers');
         }
 
         $project = Project::create($data);
@@ -50,7 +50,7 @@ class ProjectController extends Controller
 
         if ($request->hasFile('gallery')) {
             foreach ($request->file('gallery') as $i => $file) {
-                $path = $file->store('projects/gallery', 'public');
+                $path = PublicUpload::store($file, 'projects/gallery');
                 $project->images()->create([
                     'image_path' => $path,
                     'sort_order' => $i,
@@ -74,10 +74,8 @@ class ProjectController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('cover_image')) {
-            if ($project->cover_image) {
-                Storage::disk('public')->delete($project->cover_image);
-            }
-            $data['cover_image'] = $request->file('cover_image')->store('projects/covers', 'public');
+            PublicUpload::delete($project->cover_image);
+            $data['cover_image'] = PublicUpload::store($request->file('cover_image'), 'projects/covers');
         }
 
         $project->update($data);
@@ -86,7 +84,7 @@ class ProjectController extends Controller
 
         if ($request->hasFile('gallery')) {
             foreach ($request->file('gallery') as $i => $file) {
-                $path = $file->store('projects/gallery', 'public');
+                $path = PublicUpload::store($file, 'projects/gallery');
                 $project->images()->create([
                     'image_path' => $path,
                     'sort_order' => $project->images()->count() + $i,
@@ -100,11 +98,9 @@ class ProjectController extends Controller
 
     public function destroy(Project $project)
     {
-        if ($project->cover_image) {
-            Storage::disk('public')->delete($project->cover_image);
-        }
+        PublicUpload::delete($project->cover_image);
         foreach ($project->images as $image) {
-            Storage::disk('public')->delete($image->image_path);
+            PublicUpload::delete($image->image_path);
         }
         $project->delete();
 
@@ -114,7 +110,7 @@ class ProjectController extends Controller
 
     public function deleteImage(ProjectImage $image)
     {
-        Storage::disk('public')->delete($image->image_path);
+        PublicUpload::delete($image->image_path);
         $image->delete();
         return back()->with('success', 'Image deleted.');
     }

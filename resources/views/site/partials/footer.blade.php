@@ -1,27 +1,18 @@
+@php
+    $footerName = $siteSettings['site_name'] ?? $siteAbout?->full_name ?? config('app.name');
+    $footerTagline = $siteSettings['site_tagline'] ?? $siteAbout?->tagline ?? 'Backend developer building reliable APIs and CRMs.';
+@endphp
 <footer class="footer">
     <div class="container">
         <div class="footer-inner">
             <div>
-                <h4>{{ $siteAbout?->full_name ?? config('app.name') }}</h4>
+                <h4>{{ $footerName }}</h4>
                 <p style="margin-top: 0.5rem; max-width: 380px;">
-                    {{ $siteAbout?->tagline ?? 'Backend developer building reliable APIs and CRMs.' }}
+                    {{ $footerTagline }}
                 </p>
-                @if($siteAbout)
-                <div style="margin-top: 1.25rem; display: flex; gap: 0.75rem;">
-                    @if($siteAbout->github_url)
-                        <a href="{{ $siteAbout->github_url }}" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                    @endif
-                    @if($siteAbout->linkedin_url)
-                        <a href="{{ $siteAbout->linkedin_url }}" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    @endif
-                    @if($siteAbout->twitter_url)
-                        <a href="{{ $siteAbout->twitter_url }}" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    @endif
-                    @if($siteAbout->stackoverflow_url)
-                        <a href="{{ $siteAbout->stackoverflow_url }}" target="_blank" rel="noopener" aria-label="Stack Overflow"><i class="fab fa-stack-overflow"></i></a>
-                    @endif
+                <div style="margin-top: 1.25rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                    @include('site.partials.social-icons')
                 </div>
-                @endif
             </div>
 
             <div>
@@ -44,7 +35,7 @@
         </div>
 
         <div class="footer-bottom">
-            &copy; {{ date('Y') }} {{ $siteAbout?->full_name ?? config('app.name') }}. All rights reserved. Built with Laravel.
+            &copy; {{ date('Y') }} {{ $footerName }}. All rights reserved. Built with Laravel.
         </div>
     </div>
 </footer>

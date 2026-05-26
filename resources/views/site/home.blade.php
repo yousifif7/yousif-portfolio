@@ -1,22 +1,34 @@
 @extends('site.layouts.app')
 
-@section('title', ($about?->full_name ?? 'Portfolio') . ' - ' . ($about?->title ?? 'Developer'))
+@section('title', ($siteSettings['site_name'] ?? $about?->full_name ?? 'Portfolio') . ' - ' . ($about?->title ?? 'Developer'))
 
 @section('content')
+
+@php
+    $heroGreeting = $siteSettings['hero_greeting'] ?? "Hello, I'm";
+    $heroHeadline = $siteSettings['hero_headline'] ?? $about?->full_name ?? 'Your Name';
+    $heroSubheadline = $siteSettings['hero_subheadline'] ?? $about?->tagline ?? 'Building things on the web.';
+    $heroCtaText = $siteSettings['hero_cta_text'] ?? null;
+    $heroCtaUrl = $siteSettings['hero_cta_url'] ?? null;
+@endphp
 
 {{-- ===== Hero ===== --}}
 <section class="hero">
     <div class="container hero-inner">
         <div>
-            <div class="hero-greeting">Hello, I'm</div>
+            <div class="hero-greeting">{{ $heroGreeting }}</div>
             <h1 class="hero-title">
-                {{ $about?->full_name ?? 'Your Name' }}<br>
+                {{ $heroHeadline }}<br>
                 <span class="accent">{{ $about?->title ?? 'Developer' }}</span>
             </h1>
-            <p class="hero-subtitle">{{ $about?->tagline ?? 'Building things on the web.' }}</p>
+            <p class="hero-subtitle">{{ $heroSubheadline }}</p>
             <p class="hero-bio">{{ $about?->short_bio }}</p>
             <div class="hero-buttons">
-                <a href="{{ route('projects.index') }}" class="btn btn-primary btn-lg"><i class="fas fa-briefcase"></i> View Projects</a>
+                @if($heroCtaText && $heroCtaUrl)
+                    <a href="{{ $heroCtaUrl }}" class="btn btn-primary btn-lg"><i class="fas fa-arrow-right"></i> {{ $heroCtaText }}</a>
+                @else
+                    <a href="{{ route('projects.index') }}" class="btn btn-primary btn-lg"><i class="fas fa-briefcase"></i> View Projects</a>
+                @endif
                 <a href="{{ route('contact') }}" class="btn btn-outline btn-lg"><i class="fas fa-paper-plane"></i> Get In Touch</a>
                 @if($about?->cv_url)
                     <a href="{{ $about->cv_url }}" target="_blank" class="btn btn-light btn-lg"><i class="fas fa-download"></i> Download CV</a>

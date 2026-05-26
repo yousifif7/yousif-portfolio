@@ -1,8 +1,25 @@
+@php
+    $logoPath = $siteSettings['site_logo'] ?? null;
+    $navLogo = $logoPath ? \App\Support\PublicUpload::url($logoPath) : null;
+    $navLogoDark = $logoPath === 'brand/logo.svg' ? asset('brand/logo-dark.svg') : null;
+    $navName = $siteSettings['site_name'] ?? $siteAbout?->full_name ?? config('app.name');
+@endphp
 <nav class="navbar">
     <div class="navbar-inner">
         <a href="{{ route('home') }}" class="navbar-brand">
-            <span class="brand-dot"></span>
-            <span>{{ $siteAbout?->full_name ?? config('app.name') }}</span>
+            @if($navLogo)
+                @if($navLogoDark)
+                    <picture>
+                        <source srcset="{{ $navLogoDark }}" media="(prefers-color-scheme: dark)">
+                        <img src="{{ $navLogo }}" alt="{{ $navName }}" style="height:36px;width:auto;">
+                    </picture>
+                @else
+                    <img src="{{ $navLogo }}" alt="{{ $navName }}" style="height:36px;width:auto;">
+                @endif
+            @else
+                <span class="brand-dot"></span>
+                <span>{{ $navName }}</span>
+            @endif
         </a>
 
         <button class="nav-toggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>

@@ -95,34 +95,12 @@
     </div>
 
     <div class="card">
-        <div class="card-header"><h2><i class="fas fa-share-alt"></i> Social Links</h2></div>
+        <div class="card-header"><h2><i class="fas fa-info-circle"></i> Social & freelance links</h2></div>
         <div class="card-body">
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label"><i class="fab fa-github"></i> GitHub</label>
-                    <input type="url" name="github_url" class="form-control" value="{{ old('github_url', $about->github_url) }}" placeholder="https://github.com/...">
-                </div>
-                <div class="form-group">
-                    <label class="form-label"><i class="fab fa-linkedin"></i> LinkedIn</label>
-                    <input type="url" name="linkedin_url" class="form-control" value="{{ old('linkedin_url', $about->linkedin_url) }}" placeholder="https://linkedin.com/in/...">
-                </div>
-                <div class="form-group">
-                    <label class="form-label"><i class="fab fa-twitter"></i> Twitter / X</label>
-                    <input type="url" name="twitter_url" class="form-control" value="{{ old('twitter_url', $about->twitter_url) }}" placeholder="https://x.com/...">
-                </div>
-                <div class="form-group">
-                    <label class="form-label"><i class="fab fa-facebook"></i> Facebook</label>
-                    <input type="url" name="facebook_url" class="form-control" value="{{ old('facebook_url', $about->facebook_url) }}">
-                </div>
-                <div class="form-group">
-                    <label class="form-label"><i class="fab fa-instagram"></i> Instagram</label>
-                    <input type="url" name="instagram_url" class="form-control" value="{{ old('instagram_url', $about->instagram_url) }}">
-                </div>
-                <div class="form-group">
-                    <label class="form-label"><i class="fab fa-stack-overflow"></i> Stack Overflow</label>
-                    <input type="url" name="stackoverflow_url" class="form-control" value="{{ old('stackoverflow_url', $about->stackoverflow_url) }}">
-                </div>
-            </div>
+            <p style="margin:0;color:var(--gray-600);">
+                Social and freelance platform links are now managed in
+                <a href="{{ route('admin.settings.edit') }}" style="color:var(--primary);font-weight:600;">Site Settings</a>.
+            </p>
         </div>
     </div>
 

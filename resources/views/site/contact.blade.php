@@ -1,6 +1,6 @@
 @extends('site.layouts.app')
 
-@section('title', 'Contact - ' . ($siteAbout?->full_name ?? config('app.name')))
+@section('title', 'Contact - ' . ($siteSettings['site_name'] ?? $siteAbout?->full_name ?? config('app.name')))
 
 @section('content')
 
@@ -57,24 +57,7 @@
                 </ul>
 
                 <div class="social-icons">
-                    @if($siteAbout?->github_url)
-                        <a href="{{ $siteAbout->github_url }}" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
-                    @endif
-                    @if($siteAbout?->linkedin_url)
-                        <a href="{{ $siteAbout->linkedin_url }}" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
-                    @endif
-                    @if($siteAbout?->twitter_url)
-                        <a href="{{ $siteAbout->twitter_url }}" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
-                    @endif
-                    @if($siteAbout?->facebook_url)
-                        <a href="{{ $siteAbout->facebook_url }}" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
-                    @endif
-                    @if($siteAbout?->instagram_url)
-                        <a href="{{ $siteAbout->instagram_url }}" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
-                    @endif
-                    @if($siteAbout?->stackoverflow_url)
-                        <a href="{{ $siteAbout->stackoverflow_url }}" target="_blank" rel="noopener"><i class="fab fa-stack-overflow"></i></a>
-                    @endif
+                    @include('site.partials.social-icons')
                 </div>
             </div>
 

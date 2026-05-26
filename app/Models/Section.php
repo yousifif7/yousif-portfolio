@@ -44,6 +44,6 @@ class Section extends Model
 
     public function getImageUrlAttribute(): ?string
     {
-        return $this->image ? asset('storage/'.$this->image) : null;
+        return \App\Support\PublicUpload::url($this->image);
     }
 }

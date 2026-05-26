@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\About;
+use App\Models\Setting;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,10 +16,13 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        // Share the About profile globally with all site views, so the layout can use it
         View::composer('site.*', function ($view) {
-            $about = About::first();
-            $view->with('siteAbout', $about);
+            $view->with('siteAbout', About::first());
+            $view->with('siteSettings', Setting::all_keyed());
+        });
+
+        View::composer('admin.*', function ($view) {
+            $view->with('siteSettings', Setting::all_keyed());
         });
     }
 }

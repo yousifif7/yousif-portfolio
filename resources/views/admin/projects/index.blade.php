@@ -59,7 +59,10 @@
                                 <span class="badge badge-secondary">Draft</span>
                             @endif
                         </td>
-                        <td>{{ $project->views }}</td>
+                        <td>
+                            <div title="Total views"><i class="fas fa-eye" style="color: var(--gray-500);"></i> {{ number_format($project->views) }}</div>
+                            <div title="Unique views" style="font-size: 0.8rem; color: var(--gray-500);"><i class="fas fa-user"></i> {{ number_format($project->unique_views) }}</div>
+                        </td>
                         <td class="actions">
                             <a href="{{ route('projects.show', $project) }}" target="_blank" class="btn btn-outline btn-sm" title="Preview"><i class="fas fa-eye"></i></a>
                             <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-primary btn-sm"><i class="fas fa-pen"></i></a>

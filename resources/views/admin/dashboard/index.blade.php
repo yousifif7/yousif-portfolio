@@ -7,6 +7,46 @@
 
 <div class="stats-grid">
     <div class="stat-card">
+        <div class="icon primary"><i class="fas fa-eye"></i></div>
+        <div class="info">
+            <div class="label">Visits Today</div>
+            <div class="value">{{ number_format($stats['visits_today']) }}</div>
+            <div style="font-size: 0.8rem; color: var(--gray-500);">{{ number_format($stats['visits_today_unique']) }} unique</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="icon info"><i class="fas fa-calendar-week"></i></div>
+        <div class="info">
+            <div class="label">Visits (7 days)</div>
+            <div class="value">{{ number_format($stats['visits_week']) }}</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="icon success"><i class="fas fa-users"></i></div>
+        <div class="info">
+            <div class="label">Total Visitors</div>
+            <div class="value">{{ number_format($stats['visits_total_unique']) }}</div>
+            <div style="font-size: 0.8rem; color: var(--gray-500);">{{ number_format($stats['visits_total']) }} visits</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="icon danger"><i class="fas fa-fire"></i></div>
+        <div class="info">
+            <div class="label">Project Views</div>
+            <div class="value">{{ number_format($stats['total_views']) }}</div>
+            <div style="font-size: 0.8rem; color: var(--gray-500);">{{ number_format($stats['total_unique_views']) }} unique</div>
+        </div>
+    </div>
+</div>
+
+<div style="margin: 0.5rem 0 1.5rem;">
+    <a href="{{ route('admin.stats.index') }}" class="btn btn-outline btn-sm">
+        <i class="fas fa-chart-line"></i> View full visitor stats
+    </a>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
         <div class="icon primary"><i class="fas fa-briefcase"></i></div>
         <div class="info">
             <div class="label">Total Projects</div>
@@ -32,13 +72,6 @@
         <div class="info">
             <div class="label">Unread Messages</div>
             <div class="value">{{ $stats['unread_messages'] }}</div>
-        </div>
-    </div>
-    <div class="stat-card">
-        <div class="icon danger"><i class="fas fa-eye"></i></div>
-        <div class="info">
-            <div class="label">Total Views</div>
-            <div class="value">{{ $stats['total_views'] }}</div>
         </div>
     </div>
     <div class="stat-card">

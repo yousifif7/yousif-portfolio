@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Section;
+use App\Support\PublicUpload;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class SectionController extends Controller
 {
@@ -25,7 +25,7 @@ class SectionController extends Controller
         $data = $this->validateData($request);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('sections', 'public');
+            $data['image'] = PublicUpload::store($request->file('image'), 'sections');
         }
 
         Section::create($data);
@@ -43,10 +43,8 @@ class SectionController extends Controller
         $data = $this->validateData($request);
 
         if ($request->hasFile('image')) {
-            if ($section->image) {
-                Storage::disk('public')->delete($section->image);
-            }
-            $data['image'] = $request->file('image')->store('sections', 'public');
+            PublicUpload::delete($section->image);
+            $data['image'] = PublicUpload::store($request->file('image'), 'sections');
         }
 
         $section->update($data);
@@ -56,9 +54,7 @@ class SectionController extends Controller
 
     public function destroy(Section $section)
     {
-        if ($section->image) {
-            Storage::disk('public')->delete($section->image);
-        }
+        PublicUpload::delete($section->image);
         $section->delete();
         return redirect()->route('admin.sections.index')
             ->with('success', 'Section deleted.');

@@ -5,22 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ProjectImage extends Model
+class ProjectView extends Model
 {
     protected $fillable = [
         'project_id',
-        'image_path',
-        'caption',
-        'sort_order',
+        'ip_address',
+        'session_id',
+        'user_agent',
+        'referrer',
+        'viewed_on',
+        'viewed_at',
+    ];
+
+    protected $casts = [
+        'viewed_on' => 'date',
+        'viewed_at' => 'datetime',
     ];
 
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
-    }
-
-    public function getUrlAttribute(): string
-    {
-        return \App\Support\PublicUpload::url($this->image_path) ?? '';
     }
 }

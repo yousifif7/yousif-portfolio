@@ -1,6 +1,6 @@
 @extends('site.layouts.app')
 
-@section('title', 'Projects - ' . ($siteAbout?->full_name ?? config('app.name')))
+@section('title', 'Projects - ' . ($siteSettings['site_name'] ?? $siteAbout?->full_name ?? config('app.name')))
 
 @section('content')
 

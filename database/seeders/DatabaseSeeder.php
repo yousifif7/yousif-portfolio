@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\About;
 use App\Models\Experience;
 use App\Models\Service;
+use App\Models\Setting;
 use App\Models\Skill;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -19,7 +20,7 @@ class DatabaseSeeder extends Seeder
             ['email' => 'admin@yousifelfarra.com'],
             [
                 'name' => 'Yousif Elfarra',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('Yousif2001**'),
                 'is_admin' => true,
                 'email_verified_at' => now(),
             ]
@@ -41,10 +42,17 @@ class DatabaseSeeder extends Seeder
                 'education_university' => 'Al-Aqsa University',
                 'email' => 'yousifelfarra0@gmail.com',
                 'phone' => '+970-599-761-452',
-                'github_url' => 'https://github.com/yousifif7',
-                'linkedin_url' => 'https://linkedin.com/in/yousifelfarra',
             ]
         );
+
+        // Default social links (now stored in settings)
+        $defaultLinks = [
+            'github_url' => 'https://github.com/yousifif7',
+            'linkedin_url' => 'https://linkedin.com/in/yousifelfarra',
+        ];
+        foreach ($defaultLinks as $key => $url) {
+            Setting::set($key, $url, 'url', 'links');
+        }
 
         // Skills
         $skills = [
