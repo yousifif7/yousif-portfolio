@@ -1,6 +1,25 @@
 @extends('site.layouts.app')
 
 @section('title', 'Projects - ' . ($siteSettings['site_name'] ?? $siteAbout?->full_name ?? config('app.name')))
+@section('description', 'Browse my portfolio of projects — web applications, APIs, and more.')
+@section('canonical', route('projects.index'))
+
+@if(request('q') || request('skill') || request('category'))
+    @section('robots', 'noindex, follow')
+@endif
+
+@push('head')
+<script type="application/ld+json">
+{!! json_encode([
+    '@context' => 'https://schema.org',
+    '@type' => 'BreadcrumbList',
+    'itemListElement' => [
+        ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')],
+        ['@type' => 'ListItem', 'position' => 2, 'name' => 'Projects'],
+    ],
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+</script>
+@endpush
 
 @section('content')
 

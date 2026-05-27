@@ -1,6 +1,20 @@
 @extends('site.layouts.app')
 
 @section('title', 'Contact - ' . ($siteSettings['site_name'] ?? $siteAbout?->full_name ?? config('app.name')))
+@section('description', 'Get in touch — I\'m always open to discussing new projects, ideas, or opportunities.')
+
+@push('head')
+<script type="application/ld+json">
+{!! json_encode([
+    '@context' => 'https://schema.org',
+    '@type' => 'BreadcrumbList',
+    'itemListElement' => [
+        ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')],
+        ['@type' => 'ListItem', 'position' => 2, 'name' => 'Contact'],
+    ],
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+</script>
+@endpush
 
 @section('content')
 

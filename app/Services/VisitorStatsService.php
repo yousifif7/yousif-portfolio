@@ -34,10 +34,10 @@ class VisitorStatsService
     {
         $start = Carbon::today()->subDays($days - 1);
 
-        $rows = PageVisit::selectRaw('DATE(visited_at) as day, COUNT(*) as visits, COUNT(DISTINCT ip_address) as unique_visitors')
+        $rows = PageVisit::selectRaw('DATE_FORMAT(visited_at, "%Y-%m-%d") as day, COUNT(*) as visits, COUNT(DISTINCT ip_address) as unique_visitors')
             ->where('visited_at', '>=', $start)
-            ->groupBy('day')
-            ->orderBy('day')
+            ->groupByRaw('DATE_FORMAT(visited_at, "%Y-%m-%d")')
+            ->orderByRaw('DATE_FORMAT(visited_at, "%Y-%m-%d")')
             ->get()
             ->keyBy('day');
 
@@ -48,8 +48,9 @@ class VisitorStatsService
         foreach (CarbonPeriod::create($start, Carbon::today()) as $date) {
             $key = $date->toDateString();
             $labels[] = $date->format('M j');
-            $visits[] = (int) ($rows[$key]->visits ?? 0);
-            $unique[] = (int) ($rows[$key]->unique_visitors ?? 0);
+            $row = $rows->get($key);
+            $visits[] = $row ? (int) $row->visits : 0;
+            $unique[] = $row ? (int) $row->unique_visitors : 0;
         }
 
         return compact('labels', 'visits', 'unique');

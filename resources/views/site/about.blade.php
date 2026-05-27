@@ -1,6 +1,22 @@
 @extends('site.layouts.app')
 
 @section('title', 'About - ' . ($about?->full_name ?? config('app.name')))
+@section('description', $about?->short_bio ?? 'Learn more about ' . ($about?->full_name ?? 'me') . ' and my experience.')
+
+@push('head')
+@if($about)
+<script type="application/ld+json">
+{!! json_encode([
+    '@context' => 'https://schema.org',
+    '@type' => 'BreadcrumbList',
+    'itemListElement' => [
+        ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')],
+        ['@type' => 'ListItem', 'position' => 2, 'name' => 'About'],
+    ],
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+</script>
+@endif
+@endpush
 
 @section('content')
 

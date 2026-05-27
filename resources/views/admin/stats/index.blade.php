@@ -57,7 +57,9 @@
 <div class="card" style="margin-top: 1.5rem;">
     <div class="card-header"><h2><i class="fas fa-chart-line"></i> Visits — Last 30 Days</h2></div>
     <div class="card-body">
-        <canvas id="visitsChart" height="80"></canvas>
+        <div style="position: relative; height: 300px;">
+            <canvas id="visitsChart"></canvas>
+        </div>
     </div>
 </div>
 

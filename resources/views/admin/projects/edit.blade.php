@@ -9,10 +9,16 @@
         <a href="{{ route('projects.show', $project) }}" target="_blank" class="btn btn-outline btn-sm"><i class="fas fa-eye"></i> Preview</a>
     </div>
     <div class="card-body">
-        <form method="POST" action="{{ route('admin.projects.update', $project) }}" enctype="multipart/form-data">
+        <form id="project-form" method="POST" action="{{ route('admin.projects.update', $project) }}" enctype="multipart/form-data">
             @method('PUT')
             @include('admin.projects._form')
         </form>
     </div>
 </div>
+
+@foreach($project->images as $img)
+    <form id="delete-img-{{ $img->id }}" method="POST" action="{{ route('admin.projects.images.destroy', $img) }}" style="display: none;">
+        @csrf @method('DELETE')
+    </form>
+@endforeach
 @endsection

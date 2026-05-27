@@ -11,17 +11,36 @@
         $metaDescription = $siteSettings['seo_meta_description'] ?? $siteAbout?->short_bio ?? 'Portfolio';
         $ogImage = isset($siteSettings['seo_og_image']) ? \App\Support\PublicUpload::url($siteSettings['seo_og_image']) : null;
         $favicon = isset($siteSettings['site_favicon']) ? \App\Support\PublicUpload::url($siteSettings['site_favicon']) : null;
+        $pageTitle = trim($__env->yieldContent('title', $metaTitle ?? $siteName));
+        $pageDescription = trim($__env->yieldContent('description', $metaDescription));
+        $canonicalUrl = $__env->yieldContent('canonical', url()->current());
+        $pageOgImage = trim($__env->yieldContent('og_image')) ?: $ogImage;
+        $pageOgType = trim($__env->yieldContent('og_type')) ?: 'website';
     @endphp
 
-    <title>@yield('title', $metaTitle ?? $siteName)</title>
-    <meta name="description" content="@yield('description', $metaDescription)">
+    <title>{{ $pageTitle }}</title>
+    <meta name="description" content="{{ $pageDescription }}">
+    <link rel="canonical" href="{{ $canonicalUrl }}">
 
-    <meta property="og:title" content="@yield('title', $metaTitle ?? $siteName)">
-    <meta property="og:description" content="@yield('description', $metaDescription)">
-    @if($ogImage)
-        <meta property="og:image" content="{{ $ogImage }}">
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="{{ $ogImage }}">
+    <meta property="og:site_name" content="{{ $siteName }}">
+    <meta property="og:title" content="{{ $pageTitle }}">
+    <meta property="og:description" content="{{ $pageDescription }}">
+    <meta property="og:type" content="{{ $pageOgType }}">
+    <meta property="og:url" content="{{ $canonicalUrl }}">
+    <meta property="og:locale" content="en_US">
+    @if($pageOgImage)
+        <meta property="og:image" content="{{ $pageOgImage }}">
+    @endif
+
+    <meta name="twitter:card" content="{{ $pageOgImage ? 'summary_large_image' : 'summary' }}">
+    <meta name="twitter:title" content="{{ $pageTitle }}">
+    <meta name="twitter:description" content="{{ $pageDescription }}">
+    @if($pageOgImage)
+        <meta name="twitter:image" content="{{ $pageOgImage }}">
+    @endif
+
+    @hasSection('robots')
+        <meta name="robots" content="@yield('robots')">
     @endif
 
     @if($favicon)
@@ -37,6 +56,7 @@
     @include('site.partials.brand-colors')
 
     @stack('styles')
+    @stack('head')
 </head>
 <body>
     @include('site.partials.navbar')

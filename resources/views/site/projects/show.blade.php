@@ -2,6 +2,41 @@
 
 @section('title', $project->title . ' - ' . ($siteSettings['site_name'] ?? $siteAbout?->full_name ?? config('app.name')))
 @section('description', $project->short_description)
+@section('og_type', 'article')
+@section('og_image', $project->cover_image_url)
+@section('canonical', route('projects.show', $project))
+
+@push('head')
+<script type="application/ld+json">
+{!! json_encode(array_filter([
+    '@context' => 'https://schema.org',
+    '@type' => 'CreativeWork',
+    'name' => $project->title,
+    'description' => $project->short_description,
+    'url' => route('projects.show', $project),
+    'image' => $project->cover_image_url,
+    'dateCreated' => $project->completed_at?->toIso8601String(),
+    'author' => [
+        '@type' => 'Person',
+        'name' => $siteAbout?->full_name ?? config('app.name'),
+        'url' => url('/'),
+    ],
+    'keywords' => $project->skills->pluck('name')->implode(', ') ?: null,
+    'genre' => $project->category,
+]), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+</script>
+<script type="application/ld+json">
+{!! json_encode([
+    '@context' => 'https://schema.org',
+    '@type' => 'BreadcrumbList',
+    'itemListElement' => [
+        ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')],
+        ['@type' => 'ListItem', 'position' => 2, 'name' => 'Projects', 'item' => route('projects.index')],
+        ['@type' => 'ListItem', 'position' => 3, 'name' => $project->title],
+    ],
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+</script>
+@endpush
 
 @section('content')
 

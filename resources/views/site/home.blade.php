@@ -1,6 +1,38 @@
 @extends('site.layouts.app')
 
 @section('title', ($siteSettings['site_name'] ?? $about?->full_name ?? 'Portfolio') . ' - ' . ($about?->title ?? 'Developer'))
+@section('description', $about?->short_bio ?? ($siteSettings['seo_meta_description'] ?? ''))
+
+@push('head')
+<script type="application/ld+json">
+{!! json_encode([
+    '@context' => 'https://schema.org',
+    '@graph' => array_filter([
+        [
+            '@type' => 'WebSite',
+            'name' => $siteSettings['site_name'] ?? $about?->full_name ?? config('app.name'),
+            'url' => url('/'),
+        ],
+        $about ? array_filter([
+            '@type' => 'Person',
+            'name' => $about->full_name,
+            'jobTitle' => $about->title,
+            'description' => $about->short_bio,
+            'url' => url('/'),
+            'image' => $about->avatar_url,
+            'email' => $about->email ? 'mailto:' . $about->email : null,
+            'address' => $about->location ? ['@type' => 'PostalAddress', 'addressLocality' => $about->location] : null,
+            'nationality' => $about->nationality ? ['@type' => 'Country', 'name' => $about->nationality] : null,
+            'sameAs' => array_values(array_filter([
+                $siteSettings['github_url'] ?? null,
+                $siteSettings['linkedin_url'] ?? null,
+                $siteSettings['twitter_url'] ?? null,
+            ])),
+        ]) : null,
+    ]),
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+</script>
+@endpush
 
 @section('content')
 

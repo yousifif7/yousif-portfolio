@@ -88,10 +88,10 @@
             @foreach($project->images as $img)
                 <div class="img-thumb">
                     <img src="{{ $img->url }}" alt="">
-                    <form method="POST" action="{{ route('admin.projects.images.destroy', $img) }}" onsubmit="return confirm('Delete this image?')" style="margin: 0;">
-                        @csrf @method('DELETE')
-                        <button type="submit" class="delete-img" title="Delete"><i class="fas fa-times"></i></button>
-                    </form>
+                    <button type="button" class="delete-img" title="Delete"
+                            onclick="if(confirm('Delete this image?')) document.getElementById('delete-img-{{ $img->id }}').submit();">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
             @endforeach
         </div>
@@ -116,6 +116,6 @@
 </div>
 
 <div style="display: flex; gap: 0.5rem; padding-top: 1rem; border-top: 1px solid var(--gray-200); margin-top: 1rem;">
-    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ isset($project) ? 'Update Project' : 'Create Project' }}</button>
+    <button type="submit" form="project-form" class="btn btn-primary"><i class="fas fa-save"></i> {{ isset($project) ? 'Update Project' : 'Create Project' }}</button>
     <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary">Cancel</a>
 </div>
