@@ -1008,6 +1008,16 @@ textarea.form-control {
     border-color: transparent;
 }
 
+.pagination .page-item.disabled .page-link {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination .page-item:not(.active):not(.disabled) .page-link:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
 /* ===== Dynamic sections styling ===== */
 .dynamic-section .content { line-height: 1.8; color: var(--gray-700); font-size: 1.05rem; }
 .dynamic-section .content p { margin-bottom: 1rem; }

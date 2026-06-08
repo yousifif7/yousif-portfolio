@@ -50,11 +50,7 @@ class ProjectController extends Controller
         $this->recordView($project, $request);
         $project->load('skills', 'images');
 
-        $related = Project::published()
-            ->where('id', '!=', $project->id)
-            ->whereHas('skills', fn ($q) => $q->whereIn('skills.id', $project->skills->pluck('id')))
-            ->limit(3)
-            ->get();
+        $related = $project->relatedProjects(3);
 
         return view('site.projects.show', compact('project', 'related'));
     }
