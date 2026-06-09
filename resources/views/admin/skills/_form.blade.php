@@ -40,7 +40,7 @@
     <label for="is_active">Active (visible on website)</label>
 </div>
 
-<div style="display:flex; gap: 0.5rem; padding-top: 1rem; margin-top: 1rem; border-top: 1px solid var(--gray-200);">
+<div class="form-actions">
     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ isset($skill) ? 'Update' : 'Create' }} Skill</button>
     <a href="{{ route('admin.skills.index') }}" class="btn btn-secondary">Cancel</a>
 </div>

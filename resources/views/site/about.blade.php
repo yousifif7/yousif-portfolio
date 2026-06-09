@@ -20,7 +20,7 @@
 
 @section('content')
 
-<section class="section" style="padding-top: 8rem;">
+<section class="section page-hero-spacing">
     <div class="container">
         <div class="section-header" style="margin-bottom: 3rem;">
             <div class="section-eyebrow">Get to know me</div>
@@ -68,8 +68,8 @@
             </div>
 
             <div>
-                <h2 style="font-size: 2rem; color: var(--dark); margin-bottom: 1.25rem;">{{ $about?->title }}</h2>
-                <div style="color: var(--gray-600); font-size: 1.05rem; line-height: 1.8; white-space: pre-wrap;">{!! nl2br(e($about?->long_bio ?? $about?->short_bio)) !!}</div>
+                <h2 class="about-bio-title">{{ $about?->title }}</h2>
+                <div class="about-bio-text">{!! nl2br(e($about?->long_bio ?? $about?->short_bio)) !!}</div>
 
                 <div style="display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;">
                     <a href="{{ route('contact') }}" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Contact Me</a>
@@ -141,7 +141,7 @@
                 <h2 class="section-title">{{ $section->title }}</h2>
                 @if($section->subtitle)<p class="section-subtitle">{{ $section->subtitle }}</p>@endif
             </div>
-            <div class="content" style="max-width: 800px; margin: 0 auto;">{!! nl2br(e($section->content)) !!}</div>
+            <div class="content prose-width">{!! nl2br(e($section->content)) !!}</div>
         </div>
     </section>
 @endforeach

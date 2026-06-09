@@ -76,9 +76,9 @@
                 ] as $key => $label)
                     <div class="form-group">
                         <label class="form-label">{{ $label }}</label>
-                        <div style="display:flex;gap:0.5rem;align-items:center;">
-                            <input type="color" data-color-picker="{{ $key }}" value="{{ $val($key) ?: '#000000' }}" style="width:50px;height:38px;padding:2px;border:1px solid var(--gray-300);border-radius:6px;cursor:pointer;">
-                            <input type="text" name="{{ $key }}" data-color-hex="{{ $key }}" value="{{ $val($key) }}" class="form-control" placeholder="#000000 (leave blank for default)" pattern="^#[0-9a-fA-F]{6}$" style="flex:1;">
+                        <div class="color-input-group">
+                            <input type="color" data-color-picker="{{ $key }}" value="{{ $val($key) ?: '#000000' }}">
+                            <input type="text" name="{{ $key }}" data-color-hex="{{ $key }}" value="{{ $val($key) }}" class="form-control" placeholder="#000000 (leave blank for default)" pattern="^#[0-9a-fA-F]{6}$">
                         </div>
                         @error($key)<div class="form-error">{{ $message }}</div>@enderror
                     </div>
@@ -206,7 +206,7 @@
         </div>
     </div>
 
-    <div style="display:flex;gap:0.5rem;margin-bottom:2rem;">
+    <div class="form-actions" style="margin-bottom: 2rem;">
         <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save"></i> Save Settings</button>
         <a href="{{ route('home') }}" target="_blank" class="btn btn-outline"><i class="fas fa-eye"></i> Preview Site</a>
     </div>

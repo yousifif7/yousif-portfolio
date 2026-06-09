@@ -99,7 +99,7 @@
             </div>
             <div class="stat">
                 <div class="number">{{ $allProjectsCount }}+</div>
-                <div class="label">Projects Delivered</div>
+                <div class="label">Projects</div>
             </div>
             <div class="stat">
                 <div class="number">{{ $skills->flatten()->count() }}+</div>
@@ -232,12 +232,12 @@
                     <p class="section-subtitle">{{ $section->subtitle }}</p>
                 @endif
             </div>
-            <div class="content" style="max-width: 800px; margin: 0 auto;">
+            <div class="content prose-width">
                 {!! nl2br(e($section->content)) !!}
             </div>
             @if($section->image)
-                <div style="max-width: 800px; margin: 2rem auto 0;">
-                    <img src="{{ $section->image_url }}" alt="{{ $section->title }}" style="border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+                <div class="section-image">
+                    <img src="{{ $section->image_url }}" alt="{{ $section->title }}">
                 </div>
             @endif
         </div>
@@ -247,9 +247,9 @@
 {{-- ===== CTA ===== --}}
 <section class="section section-alt">
     <div class="container">
-        <div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 4rem 2rem; border-radius: 24px; text-align: center;">
-            <h2 style="font-size: 2.2rem; margin-bottom: 1rem;">Have a project in mind?</h2>
-            <p style="opacity: 0.9; font-size: 1.1rem; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+        <div class="cta-banner">
+            <h2>Have a project in mind?</h2>
+            <p>
                 Let's build something great together. I'm always open to discussing new opportunities.
             </p>
             <a href="{{ route('contact') }}" class="btn btn-light btn-lg"><i class="fas fa-paper-plane"></i> Let's Talk</a>

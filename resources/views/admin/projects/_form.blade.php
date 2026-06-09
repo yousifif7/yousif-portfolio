@@ -115,7 +115,7 @@
     </div>
 </div>
 
-<div style="display: flex; gap: 0.5rem; padding-top: 1rem; border-top: 1px solid var(--gray-200); margin-top: 1rem;">
+<div class="form-actions">
     <button type="submit" form="project-form" class="btn btn-primary"><i class="fas fa-save"></i> {{ isset($project) ? 'Update Project' : 'Create Project' }}</button>
     <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary">Cancel</a>
 </div>

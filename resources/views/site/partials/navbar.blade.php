@@ -11,10 +11,10 @@
                 @if($navLogoDark)
                     <picture>
                         <source srcset="{{ $navLogoDark }}" media="(prefers-color-scheme: dark)">
-                        <img src="{{ $navLogo }}" alt="{{ $navName }}" style="height:36px;width:auto;">
+                        <img src="{{ $navLogo }}" alt="{{ $navName }}" class="navbar-logo">
                     </picture>
                 @else
-                    <img src="{{ $navLogo }}" alt="{{ $navName }}" style="height:36px;width:auto;">
+                    <img src="{{ $navLogo }}" alt="{{ $navName }}" class="navbar-logo">
                 @endif
             @else
                 <span class="brand-dot"></span>

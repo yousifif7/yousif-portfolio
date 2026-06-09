@@ -57,13 +57,13 @@
 <div class="card" style="margin-top: 1.5rem;">
     <div class="card-header"><h2><i class="fas fa-chart-line"></i> Visits — Last 30 Days</h2></div>
     <div class="card-body">
-        <div style="position: relative; height: 300px;">
+        <div class="chart-container">
             <canvas id="visitsChart"></canvas>
         </div>
     </div>
 </div>
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+<div class="grid-2" style="margin-top: 1.5rem;">
     <div class="card">
         <div class="card-header"><h2><i class="fas fa-file-alt"></i> Top Pages</h2></div>
         <div class="card-body">

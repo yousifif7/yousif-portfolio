@@ -72,12 +72,14 @@
     @include('site.partials.footer')
 
     <script>
-        // Mobile nav toggle
         document.addEventListener('DOMContentLoaded', function() {
             const toggle = document.querySelector('.nav-toggle');
             const links = document.querySelector('.nav-links');
-            if (toggle) {
+            if (toggle && links) {
                 toggle.addEventListener('click', () => links.classList.toggle('open'));
+                links.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => links.classList.remove('open'));
+                });
             }
 
             // Animate skill bars when visible

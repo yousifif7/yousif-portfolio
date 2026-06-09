@@ -15,8 +15,8 @@
 
 <div class="card">
     <div class="card-header">
-        <form method="GET" style="display: flex; gap: 0.5rem; flex: 1;">
-            <input type="search" name="q" value="{{ request('q') }}" class="form-control" placeholder="Search projects..." style="max-width: 300px;">
+        <form method="GET" class="search-form-inline">
+            <input type="search" name="q" value="{{ request('q') }}" class="form-control" placeholder="Search projects...">
             <button type="submit" class="btn btn-primary">Search</button>
         </form>
     </div>

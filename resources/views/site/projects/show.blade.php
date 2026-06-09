@@ -46,7 +46,7 @@
             <i class="fas fa-arrow-left"></i> Back to all projects
         </a>
 
-        <h1 style="font-size: 2.8rem; font-weight: 800; color: var(--dark); margin: 1rem 0 1.25rem;">{{ $project->title }}</h1>
+        <h1 class="page-inner-title">{{ $project->title }}</h1>
 
         <div class="project-meta">
             @if($project->client)
@@ -61,7 +61,7 @@
             <span><i class="fas fa-eye"></i> {{ $project->views }} views</span>
         </div>
 
-        <p style="color: var(--gray-600); font-size: 1.1rem; max-width: 800px; margin-bottom: 1.5rem;">
+        <p class="lead">
             {{ $project->short_description }}
         </p>
 
@@ -77,10 +77,10 @@
 </section>
 
 <section class="section" style="padding-top: 2rem;">
-    <div class="container" style="max-width: 1000px;">
+    <div class="container container-md">
         {{-- Cover image --}}
-        <div style="margin-bottom: 2.5rem; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.12);">
-            <img src="{{ $project->cover_image_url }}" alt="{{ $project->title }}" style="width: 100%;">
+        <div class="project-cover">
+            <img src="{{ $project->cover_image_url }}" alt="{{ $project->title }}">
         </div>
 
         {{-- Tech stack --}}

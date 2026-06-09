@@ -18,7 +18,7 @@
 
 @section('content')
 
-<section class="section" style="padding-top: 8rem;">
+<section class="section page-hero-spacing">
     <div class="container">
         <div class="section-header">
             <div class="section-eyebrow">Get In Touch</div>
@@ -122,7 +122,7 @@
                         @error('message')<div class="form-error">{{ $message }}</div>@enderror
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">
                         <i class="fas fa-paper-plane"></i> Send Message
                     </button>
                 </form>

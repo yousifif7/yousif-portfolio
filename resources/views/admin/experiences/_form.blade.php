@@ -47,7 +47,7 @@
     <label for="is_current">I currently work here</label>
 </div>
 
-<div style="display:flex; gap: 0.5rem; padding-top: 1rem; margin-top: 1rem; border-top: 1px solid var(--gray-200);">
+<div class="form-actions">
     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> {{ isset($experience) ? 'Update' : 'Create' }} Experience</button>
     <a href="{{ route('admin.experiences.index') }}" class="btn btn-secondary">Cancel</a>
 </div>

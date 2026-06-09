@@ -135,7 +135,7 @@
         </div>
     </div>
 
-    <div style="display: flex; gap: 0.5rem; margin-bottom: 2rem;">
+    <div class="form-actions" style="margin-bottom: 2rem;">
         <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save"></i> Save Changes</button>
         <a href="{{ route('home') }}" target="_blank" class="btn btn-outline"><i class="fas fa-eye"></i> Preview Site</a>
     </div>

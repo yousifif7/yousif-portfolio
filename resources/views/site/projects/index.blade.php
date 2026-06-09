@@ -23,7 +23,7 @@
 
 @section('content')
 
-<section class="section" style="padding-top: 8rem;">
+<section class="section page-hero-spacing">
     <div class="container">
         <div class="section-header" style="margin-bottom: 3rem;">
             <div class="section-eyebrow">My Work</div>
@@ -33,7 +33,7 @@
 
         {{-- Search + filters --}}
         <form method="GET" action="{{ route('projects.index') }}" class="filters-bar">
-            <input type="search" name="q" value="{{ request('q') }}" class="form-control" placeholder="Search projects..." style="flex: 1; min-width: 200px; max-width: 400px;">
+            <input type="search" name="q" value="{{ request('q') }}" class="form-control" placeholder="Search projects...">
             <button type="submit" class="btn btn-primary">Search</button>
             @if(request('q') || request('skill') || request('category'))
                 <a href="{{ route('projects.index') }}" class="filter-chip">Clear filters</a>

@@ -15,15 +15,16 @@
 <body>
     <div class="admin-layout">
         @include('admin.layouts.sidebar')
+        <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
 
         <div class="main">
             <div class="topbar">
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <button class="menu-toggle" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+                <div class="topbar-left">
+                    <button class="menu-toggle" id="sidebarToggle" type="button" aria-label="Toggle sidebar"><i class="fas fa-bars"></i></button>
                     <h1>@yield('page_title', 'Dashboard')</h1>
                 </div>
                 <div class="topbar-actions">
-                    <a href="{{ route('home') }}" target="_blank" class="btn btn-outline btn-sm"><i class="fas fa-external-link-alt"></i> View Site</a>
+                    <a href="{{ route('home') }}" target="_blank" class="btn btn-outline btn-sm"><i class="fas fa-external-link-alt"></i> <span class="btn-label">View Site</span></a>
                     <div class="user-menu">
                         <div class="avatar">{{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 2)) }}</div>
                         <span>{{ auth()->user()->name ?? 'Admin' }}</span>
@@ -49,9 +50,31 @@
     </div>
 
     <script>
-        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
-            document.querySelector('.sidebar').classList.toggle('open');
-        });
+        (function () {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const toggle = document.getElementById('sidebarToggle');
+
+            function setSidebarOpen(open) {
+                sidebar?.classList.toggle('open', open);
+                overlay?.classList.toggle('visible', open);
+                document.body.style.overflow = open ? 'hidden' : '';
+            }
+
+            toggle?.addEventListener('click', function () {
+                setSidebarOpen(!sidebar?.classList.contains('open'));
+            });
+
+            overlay?.addEventListener('click', function () {
+                setSidebarOpen(false);
+            });
+
+            window.addEventListener('resize', function () {
+                if (window.innerWidth > 992) {
+                    setSidebarOpen(false);
+                }
+            });
+        })();
     </script>
     @stack('scripts')
 </body>

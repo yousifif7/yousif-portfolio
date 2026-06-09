@@ -83,7 +83,7 @@
     </div>
 </div>
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+<div class="grid-2">
     <div class="card">
         <div class="card-header">
             <h2><i class="fas fa-envelope-open"></i> Recent Messages</h2>
@@ -91,12 +91,12 @@
         </div>
         <div class="card-body">
             @forelse($recentMessages as $msg)
-                <div style="padding: 0.8rem 0; border-bottom: 1px solid var(--gray-200); display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
-                    <div style="flex: 1; min-width: 0;">
-                        <div style="font-weight: 600; color: var(--dark);">{{ $msg->name }}</div>
-                        <div style="color: var(--gray-500); font-size: 0.85rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $msg->subject }}</div>
+                <div class="list-row">
+                    <div class="list-row-main">
+                        <div class="list-row-title">{{ $msg->name }}</div>
+                        <div class="list-row-meta">{{ $msg->subject }}</div>
                     </div>
-                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <div class="list-row-actions">
                         @if(! $msg->is_read)
                             <span class="badge badge-warning">New</span>
                         @endif
@@ -116,12 +116,12 @@
         </div>
         <div class="card-body">
             @forelse($recentProjects as $proj)
-                <div style="padding: 0.8rem 0; border-bottom: 1px solid var(--gray-200); display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
-                    <div style="flex: 1; min-width: 0;">
-                        <div style="font-weight: 600; color: var(--dark);">{{ $proj->title }}</div>
-                        <div style="color: var(--gray-500); font-size: 0.85rem;">{{ $proj->category ?? '—' }} • {{ $proj->views }} views</div>
+                <div class="list-row">
+                    <div class="list-row-main">
+                        <div class="list-row-title">{{ $proj->title }}</div>
+                        <div class="list-row-meta">{{ $proj->category ?? '—' }} • {{ $proj->views }} views</div>
                     </div>
-                    <div style="display: flex; gap: 0.4rem;">
+                    <div class="list-row-actions">
                         @if($proj->is_published)
                             <span class="badge badge-success">Published</span>
                         @else
