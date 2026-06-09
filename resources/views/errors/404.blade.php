@@ -1,5 +1,6 @@
 @extends('site.layouts.app')
 @section('title', 'Page Not Found')
+@section('robots', 'noindex, nofollow')
 @section('content')
 <section style="min-height: 70vh; display: flex; align-items: center; justify-content: center; padding-top: 100px;">
     <div style="text-align: center; max-width: 500px; padding: 2rem;">

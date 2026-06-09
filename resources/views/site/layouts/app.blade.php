@@ -43,6 +43,10 @@
         <meta name="robots" content="@yield('robots')">
     @endif
 
+    @if(!empty($siteSettings['seo_google_site_verification']))
+        <meta name="google-site-verification" content="{{ $siteSettings['seo_google_site_verification'] }}">
+    @endif
+
     @if($favicon)
         <link rel="icon" href="{{ $favicon }}">
     @endif

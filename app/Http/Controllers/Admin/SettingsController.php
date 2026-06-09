@@ -33,6 +33,7 @@ class SettingsController extends Controller
         'seo_meta_title' => ['group' => 'seo', 'type' => 'text', 'rules' => ['nullable', 'string', 'max:191']],
         'seo_meta_description' => ['group' => 'seo', 'type' => 'text', 'rules' => ['nullable', 'string', 'max:300']],
         'seo_og_image' => ['group' => 'seo', 'type' => 'image', 'rules' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096']],
+        'seo_google_site_verification' => ['group' => 'seo', 'type' => 'text', 'rules' => ['nullable', 'string', 'max:191']],
 
         // Social
         'github_url' => ['group' => 'links', 'type' => 'url', 'rules' => ['nullable', 'url', 'max:255']],

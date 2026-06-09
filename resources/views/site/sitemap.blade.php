@@ -25,7 +25,7 @@
     <url>
         <loc>{{ route('projects.show', $project->slug) }}</loc>
         @if($project->updated_at)
-        <lastmod>{{ $project->updated_at->toW3cString() }}</lastmod>
+        <lastmod>{{ $project->updated_at->toAtomString() }}</lastmod>
         @endif
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>

@@ -152,6 +152,12 @@
                 <div class="form-text">Used when sharing the site on Twitter, Facebook, LinkedIn, etc. Recommended 1200×630.</div>
                 @error('seo_og_image')<div class="form-error">{{ $message }}</div>@enderror
             </div>
+            <div class="form-group">
+                <label class="form-label">Google Search Console Verification</label>
+                <input type="text" name="seo_google_site_verification" class="form-control" value="{{ $val('seo_google_site_verification') }}" placeholder="Paste the content value from Google's meta tag">
+                <div class="form-text">From Google Search Console → Settings → Ownership verification → HTML tag. Paste only the <code>content="..."</code> value, not the full tag.</div>
+                @error('seo_google_site_verification')<div class="form-error">{{ $message }}</div>@enderror
+            </div>
         </div>
     </div>
 
