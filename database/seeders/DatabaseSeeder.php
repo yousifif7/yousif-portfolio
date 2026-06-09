@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\About;
+use App\Models\DevelopmentOffering;
 use App\Models\Experience;
+use App\Models\Review;
 use App\Models\Service;
 use App\Models\Setting;
 use App\Models\Skill;
@@ -152,6 +154,141 @@ class DatabaseSeeder extends Seeder
             Experience::updateOrCreate(
                 ['position' => $exp['position'], 'company' => $exp['company']],
                 $exp
+            );
+        }
+
+        // Development offerings (Hire page)
+        $offerings = [
+            [
+                'title' => 'Custom CRM Systems',
+                'slug' => 'custom-crm-systems',
+                'icon' => 'fas fa-users-cog',
+                'description' => 'Tailored customer relationship management platforms — leads, pipelines, automations, and reporting built with Laravel.',
+                'sort_order' => 1,
+            ],
+            [
+                'title' => 'CMS & Admin Panels',
+                'slug' => 'cms-admin-panels',
+                'icon' => 'fas fa-columns',
+                'description' => 'Custom content management systems and admin dashboards with role-based access, media libraries, and workflow tools.',
+                'sort_order' => 2,
+            ],
+            [
+                'title' => 'HRMS Solutions',
+                'slug' => 'hrms-solutions',
+                'icon' => 'fas fa-id-badge',
+                'description' => 'Human resource management systems — employee records, attendance, payroll integrations, and leave management.',
+                'sort_order' => 3,
+            ],
+            [
+                'title' => 'Business Websites',
+                'slug' => 'business-websites',
+                'icon' => 'fas fa-globe',
+                'description' => 'Professional corporate and portfolio websites with Laravel backends, contact forms, and content management.',
+                'sort_order' => 4,
+            ],
+            [
+                'title' => 'SaaS Platforms',
+                'slug' => 'saas-platforms',
+                'icon' => 'fas fa-cloud',
+                'description' => 'Multi-tenant SaaS applications with subscriptions, billing, user onboarding, and scalable architecture.',
+                'sort_order' => 5,
+            ],
+            [
+                'title' => 'RESTful APIs',
+                'slug' => 'restful-apis',
+                'icon' => 'fas fa-plug',
+                'description' => 'Secure, well-documented REST APIs for mobile apps and SPAs — authentication, versioning, and rate limiting.',
+                'sort_order' => 6,
+            ],
+            [
+                'title' => 'E-Commerce Backends',
+                'slug' => 'ecommerce-backends',
+                'icon' => 'fas fa-shopping-cart',
+                'description' => 'Order management, inventory, payment gateway integrations, and checkout flows powered by Laravel.',
+                'sort_order' => 7,
+            ],
+            [
+                'title' => 'Third-Party Integrations',
+                'slug' => 'third-party-integrations',
+                'icon' => 'fas fa-puzzle-piece',
+                'description' => 'Payment gateways, SMS providers, social APIs, webhooks, and any external service integration.',
+                'sort_order' => 8,
+            ],
+            [
+                'title' => 'App Maintenance & Support',
+                'slug' => 'app-maintenance-support',
+                'icon' => 'fas fa-tools',
+                'description' => 'Long-term support for existing Laravel projects — bug fixes, upgrades, performance tuning, and refactoring.',
+                'sort_order' => 9,
+            ],
+        ];
+
+        foreach ($offerings as $offering) {
+            DevelopmentOffering::updateOrCreate(
+                ['slug' => $offering['slug']],
+                array_merge($offering, ['is_active' => true])
+            );
+        }
+
+        // Sample approved reviews
+        $reviews = [
+            [
+                'name' => 'Ahmed Hassan',
+                'email' => 'ahmed.hassan@example.com',
+                'rating' => 5,
+                'content' => 'Yousif delivered an outstanding CRM for our sales team. Clean architecture, on-time delivery, and excellent communication throughout the project. Highly recommended for any Laravel backend work.',
+                'company' => 'SalesFlow Ltd',
+                'role' => 'CTO',
+                'status' => 'approved',
+                'approved_at' => now()->subDays(12),
+            ],
+            [
+                'name' => 'Sarah Mitchell',
+                'email' => 'sarah.m@example.com',
+                'rating' => 5,
+                'content' => 'We hired Yousif to build our REST API and he exceeded expectations. The documentation was thorough, the code was well-structured, and he proactively suggested improvements we hadn\'t considered.',
+                'company' => 'NovaTech',
+                'role' => 'Product Manager',
+                'status' => 'approved',
+                'approved_at' => now()->subDays(28),
+            ],
+            [
+                'name' => 'Omar Khalil',
+                'email' => 'omar.k@example.com',
+                'rating' => 5,
+                'content' => 'Professional, reliable, and technically strong. Yousif built our HRMS from scratch with complex payroll rules and third-party integrations. Would definitely work with him again.',
+                'company' => 'Gulf HR Solutions',
+                'role' => 'Operations Director',
+                'status' => 'approved',
+                'approved_at' => now()->subDays(45),
+            ],
+            [
+                'name' => 'James Peterson',
+                'email' => 'j.peterson@example.com',
+                'rating' => 4,
+                'content' => 'Great experience working on our SaaS backend. Yousif understood our multi-tenant requirements quickly and delivered a solid foundation we could build on. Minor timezone differences but always responsive.',
+                'company' => 'CloudMetrics',
+                'role' => 'Founder',
+                'status' => 'approved',
+                'approved_at' => now()->subDays(60),
+            ],
+            [
+                'name' => 'Layla Mansour',
+                'email' => 'layla.m@example.com',
+                'rating' => 5,
+                'content' => 'Yousif integrated three payment gateways and an SMS provider into our e-commerce platform flawlessly. His Laravel expertise saved us weeks of development time.',
+                'company' => 'ShopPalestine',
+                'role' => 'Technical Lead',
+                'status' => 'approved',
+                'approved_at' => now()->subDays(75),
+            ],
+        ];
+
+        foreach ($reviews as $review) {
+            Review::updateOrCreate(
+                ['email' => $review['email'], 'name' => $review['name']],
+                $review
             );
         }
     }

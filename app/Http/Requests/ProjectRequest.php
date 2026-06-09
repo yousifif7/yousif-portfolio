@@ -39,7 +39,7 @@ class ProjectRequest extends FormRequest
     {
         $this->merge([
             'is_featured' => $this->boolean('is_featured'),
-            'is_published' => $this->has('is_published') ? $this->boolean('is_published') : true,
+            'is_published' => $this->boolean('is_published'),
         ]);
     }
 }

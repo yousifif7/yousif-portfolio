@@ -1,21 +1,13 @@
 @php
     $logoPath = $siteSettings['site_logo'] ?? null;
     $navLogo = $logoPath ? \App\Support\PublicUpload::url($logoPath) : null;
-    $navLogoDark = $logoPath === 'brand/logo.svg' ? asset('brand/logo-dark.svg') : null;
     $navName = $siteSettings['site_name'] ?? $siteAbout?->full_name ?? config('app.name');
 @endphp
 <nav class="navbar">
     <div class="navbar-inner">
         <a href="{{ route('home') }}" class="navbar-brand">
             @if($navLogo)
-                @if($navLogoDark)
-                    <picture>
-                        <source srcset="{{ $navLogoDark }}" media="(prefers-color-scheme: dark)">
-                        <img src="{{ $navLogo }}" alt="{{ $navName }}" class="navbar-logo">
-                    </picture>
-                @else
-                    <img src="{{ $navLogo }}" alt="{{ $navName }}" class="navbar-logo">
-                @endif
+                <img src="{{ $navLogo }}" alt="{{ $navName }}" class="navbar-logo" width="160" height="36">
             @else
                 <span class="brand-dot"></span>
                 <span>{{ $navName }}</span>
@@ -29,7 +21,7 @@
             <li><a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'active' : '' }}">About</a></li>
             <li><a href="{{ route('projects.index') }}" class="{{ request()->routeIs('projects.*') ? 'active' : '' }}">Projects</a></li>
             <li><a href="{{ route('contact') }}" class="{{ request()->routeIs('contact*') ? 'active' : '' }}">Contact</a></li>
-            <li><a href="{{ route('contact') }}" class="btn btn-primary btn-sm">Hire Me</a></li>
+            <li><a href="{{ route('hire') }}" class="btn btn-sm nav-hire-btn {{ request()->routeIs('hire*') ? 'btn-outline is-current' : 'btn-primary' }}">Hire Me</a></li>
         </ul>
     </div>
 </nav>

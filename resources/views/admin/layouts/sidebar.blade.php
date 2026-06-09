@@ -1,5 +1,7 @@
 @php
     $unreadCount = \App\Models\ContactMessage::unread()->count();
+    $pendingReviewsCount = \App\Models\Review::pending()->count();
+    $unreadHireCount = \App\Models\HireRequest::unread()->count();
 @endphp
 <aside class="sidebar">
     <div class="sidebar-brand">
@@ -35,6 +37,17 @@
                 <i class="fas fa-cogs"></i> Services
             </a></li>
 
+            <li><a href="{{ route('admin.offerings.index') }}" class="{{ request()->routeIs('admin.offerings.*') ? 'active' : '' }}">
+                <i class="fas fa-laptop-code"></i> Hire Offerings
+            </a></li>
+
+            <li><a href="{{ route('admin.reviews.index') }}" class="{{ request()->routeIs('admin.reviews.*') ? 'active' : '' }}">
+                <i class="fas fa-star"></i> Reviews
+                @if($pendingReviewsCount > 0)
+                    <span class="badge">{{ $pendingReviewsCount }}</span>
+                @endif
+            </a></li>
+
             <li><a href="{{ route('admin.experiences.index') }}" class="{{ request()->routeIs('admin.experiences.*') ? 'active' : '' }}">
                 <i class="fas fa-history"></i> Experience
             </a></li>
@@ -49,6 +62,13 @@
                 <i class="fas fa-envelope"></i> Messages
                 @if($unreadCount > 0)
                     <span class="badge">{{ $unreadCount }}</span>
+                @endif
+            </a></li>
+
+            <li><a href="{{ route('admin.hire-requests.index') }}" class="{{ request()->routeIs('admin.hire-requests.*') ? 'active' : '' }}">
+                <i class="fas fa-handshake"></i> Hire Requests
+                @if($unreadHireCount > 0)
+                    <span class="badge">{{ $unreadHireCount }}</span>
                 @endif
             </a></li>
 

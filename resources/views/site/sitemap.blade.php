@@ -21,6 +21,11 @@
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
+    <url>
+        <loc>{{ route('hire') }}</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
     @foreach($projects as $project)
     <url>
         <loc>{{ route('projects.show', $project->slug) }}</loc>

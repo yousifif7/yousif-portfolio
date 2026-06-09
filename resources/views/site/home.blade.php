@@ -219,6 +219,9 @@
 </section>
 @endif
 
+{{-- ===== Reviews ===== --}}
+@include('site.partials.reviews-section')
+
 {{-- ===== Dynamic sections ===== --}}
 @foreach($sections as $section)
     <section class="section {{ $loop->even ? 'section-alt' : '' }} dynamic-section" id="{{ $section->slug }}">
@@ -252,7 +255,7 @@
             <p>
                 Let's build something great together. I'm always open to discussing new opportunities.
             </p>
-            <a href="{{ route('contact') }}" class="btn btn-light btn-lg"><i class="fas fa-paper-plane"></i> Let's Talk</a>
+            <a href="{{ route('hire') }}" class="btn btn-light btn-lg"><i class="fas fa-handshake"></i> Hire Me</a>
         </div>
     </div>
 </section>

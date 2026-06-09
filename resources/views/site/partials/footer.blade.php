@@ -20,6 +20,7 @@
                 <a href="{{ route('home') }}">Home</a>
                 <a href="{{ route('about') }}">About</a>
                 <a href="{{ route('projects.index') }}">Projects</a>
+                <a href="{{ route('hire') }}">Hire Me</a>
                 <a href="{{ route('contact') }}">Contact</a>
             </div>
 
