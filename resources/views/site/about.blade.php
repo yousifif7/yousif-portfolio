@@ -3,7 +3,7 @@
 @section('title', 'About - ' . ($about?->full_name ?? config('app.name')))
 @section('description', $about?->short_bio ?? 'Learn more about ' . ($about?->full_name ?? 'me') . ' and my experience.')
 
-@push('head')
+@push('scripts')
 @if($about)
 <script type="application/ld+json">
 {!! json_encode([
@@ -30,7 +30,16 @@
         <div class="about-grid">
             <div>
                 <div class="about-image-wrap">
-                    <img src="{{ $about?->avatar_url ?? 'https://api.dicebear.com/7.x/initials/svg?seed=' . urlencode($about?->full_name ?? 'YE') }}" alt="{{ $about?->full_name }}">
+                    @include('site.partials.optimized-image', [
+                        'src' => $about?->avatar_url ?? asset('images/default-avatar.svg'),
+                        'fallback' => $about?->avatar ? \App\Support\PublicUpload::url($about->avatar, asset('images/default-avatar.svg')) : asset('images/default-avatar.svg'),
+                        'srcset' => $about?->avatar_srcset ?? null,
+                        'alt' => $about?->full_name,
+                        'width' => 320,
+                        'height' => 320,
+                        'sizes' => '(max-width: 768px) 70vw, 320px',
+                        'lazy' => true,
+                    ])
                 </div>
 
                 <ul class="info-list">

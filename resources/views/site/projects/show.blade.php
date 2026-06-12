@@ -6,7 +6,11 @@
 @section('og_image', $project->cover_image_url)
 @section('canonical', route('projects.show', $project))
 
-@push('head')
+@push('preload')
+    <link rel="preload" as="image" href="{{ $project->cover_image_url }}" type="image/webp" fetchpriority="high">
+@endpush
+
+@push('scripts')
 <script type="application/ld+json">
 {!! json_encode(array_filter([
     '@@context' => 'https://schema.org',
@@ -80,7 +84,17 @@
     <div class="container container-md">
         {{-- Cover image --}}
         <div class="project-cover">
-            <img src="{{ $project->cover_image_url }}" alt="{{ $project->title }}">
+            @include('site.partials.optimized-image', [
+                'src' => $project->cover_image_url,
+                'fallback' => \App\Support\PublicUpload::url($project->cover_image, asset('images/project-placeholder.svg')),
+                'srcset' => $project->cover_image_srcset,
+                'alt' => $project->title,
+                'width' => 960,
+                'height' => 600,
+                'sizes' => '(max-width: 768px) 100vw, 960px',
+                'priority' => true,
+                'lazy' => false,
+            ])
         </div>
 
         {{-- Tech stack --}}

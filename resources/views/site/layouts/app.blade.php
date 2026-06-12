@@ -16,6 +16,9 @@
         $canonicalUrl = $__env->yieldContent('canonical', url()->current());
         $pageOgImage = trim($__env->yieldContent('og_image')) ?: $ogImage;
         $pageOgType = trim($__env->yieldContent('og_type')) ?: 'website';
+        $siteCssVer = @filemtime(public_path('css/site.css')) ?: 1;
+        $faVer = @filemtime(public_path('vendor/fontawesome/css/fontawesome.min.css')) ?: 1;
+        $criticalCss = @file_get_contents(public_path('css/critical.css')) ?: '';
     @endphp
 
     <title>{{ $pageTitle }}</title>
@@ -51,11 +54,25 @@
         <link rel="icon" href="{{ $favicon }}">
     @endif
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('css/site.css') }}">
+    @stack('preload')
+
+    <link rel="preload" href="{{ asset('fonts/inter-latin.woff2') }}" as="font" type="font/woff2" crossorigin>
+
+    @if($criticalCss)
+        <style>{!! $criticalCss !!}</style>
+    @endif
+
+    <link rel="preload" href="{{ asset('css/site.css') }}?v={{ $siteCssVer }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ asset('css/site.css') }}?v={{ $siteCssVer }}"></noscript>
+
+    <link rel="preload" href="{{ asset('vendor/fontawesome/css/fontawesome.min.css') }}?v={{ $faVer }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="{{ asset('vendor/fontawesome/css/solid.min.css') }}?v={{ $faVer }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="{{ asset('vendor/fontawesome/css/brands.min.css') }}?v={{ $faVer }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="{{ asset('vendor/fontawesome/css/fontawesome.min.css') }}?v={{ $faVer }}">
+        <link rel="stylesheet" href="{{ asset('vendor/fontawesome/css/solid.min.css') }}?v={{ $faVer }}">
+        <link rel="stylesheet" href="{{ asset('vendor/fontawesome/css/brands.min.css') }}?v={{ $faVer }}">
+    </noscript>
 
     @include('site.partials.brand-colors')
 
@@ -82,7 +99,6 @@
                 });
             }
 
-            // Animate skill bars when visible
             const bars = document.querySelectorAll('.skill-bar .fill');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(e => {

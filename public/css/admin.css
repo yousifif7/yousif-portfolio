@@ -795,6 +795,128 @@ textarea.form-control { min-height: 120px; resize: vertical; }
     max-width: 100%;
 }
 
+/* ===== Projects admin filters & table ===== */
+.projects-filters {
+    display: grid;
+    grid-template-columns: minmax(140px, 2fr) repeat(4, minmax(110px, 1fr)) auto auto;
+    gap: 0.5rem;
+    width: 100%;
+    align-items: center;
+}
+
+.projects-filters .form-control {
+    min-width: 0;
+    width: 100%;
+}
+
+@media (max-width: 1100px) {
+    .projects-filters {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .projects-filters .btn {
+        width: 100%;
+    }
+}
+
+.projects-table {
+    table-layout: fixed;
+}
+
+.projects-table th,
+.projects-table td {
+    padding: 0.65rem 0.75rem;
+    vertical-align: middle;
+}
+
+.projects-table .col-cover { width: 68px; }
+.projects-table .col-project { width: 28%; }
+.projects-table .col-category { width: 10%; }
+.projects-table .col-skills { width: 14%; }
+.projects-table .col-status { width: 88px; }
+.projects-table .col-views { width: 110px; }
+.projects-table .col-date { width: 88px; }
+.projects-table .col-actions { width: 118px; }
+
+.project-cover-thumb {
+    width: 52px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+}
+
+.projects-table .project-title {
+    display: block;
+    font-weight: 600;
+    color: var(--dark);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 0.15rem;
+}
+
+.projects-table .project-desc {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--gray-500);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.projects-table .skills-cell {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem;
+}
+
+.projects-table .skills-cell .badge {
+    font-size: 0.68rem;
+    padding: 0.15rem 0.45rem;
+}
+
+.projects-table .badge {
+    white-space: nowrap;
+}
+
+.projects-table .views-cell {
+    font-size: 0.8rem;
+    color: var(--gray-600);
+    white-space: nowrap;
+}
+
+.projects-table .views-cell i {
+    color: var(--gray-400);
+    font-size: 0.72rem;
+}
+
+.projects-table .views-sep {
+    color: var(--gray-300);
+    margin: 0 0.15rem;
+}
+
+.projects-table .col-date {
+    font-size: 0.82rem;
+    color: var(--gray-600);
+    white-space: nowrap;
+}
+
+.projects-table .text-muted {
+    color: var(--gray-400);
+}
+
+.projects-table .actions {
+    display: flex;
+    gap: 0.25rem;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+}
+
+.projects-table .actions .btn-sm {
+    padding: 0.35rem 0.5rem;
+}
+
 .form-actions {
     display: flex;
     gap: 0.5rem;

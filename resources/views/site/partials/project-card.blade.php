@@ -1,6 +1,15 @@
 <div class="project-card">
     <div class="cover">
-        <img src="{{ $project->cover_image_url }}" alt="{{ $project->title }}" loading="lazy">
+        @include('site.partials.optimized-image', [
+            'src' => $project->cover_image_url,
+            'fallback' => \App\Support\PublicUpload::url($project->cover_image, asset('images/project-placeholder.svg')),
+            'srcset' => $project->cover_image_srcset,
+            'alt' => $project->title,
+            'width' => 480,
+            'height' => 300,
+            'sizes' => '(max-width: 768px) 100vw, 33vw',
+            'lazy' => true,
+        ])
         @if($project->is_featured)
             <span class="badge-featured">Featured</span>
         @endif

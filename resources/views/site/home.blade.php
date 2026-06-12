@@ -3,7 +3,13 @@
 @section('title', ($siteSettings['site_name'] ?? $about?->full_name ?? 'Portfolio') . ' - ' . ($about?->title ?? 'Developer'))
 @section('description', $about?->short_bio ?? ($siteSettings['seo_meta_description'] ?? ''))
 
-@push('head')
+@push('preload')
+    @if($about?->avatar_url)
+        <link rel="preload" as="image" href="{{ $about->avatar_url }}" type="image/webp" fetchpriority="high">
+    @endif
+@endpush
+
+@push('scripts')
 <script type="application/ld+json">
 {!! json_encode([
     '@@context' => 'https://schema.org',
@@ -70,7 +76,17 @@
 
         <div class="hero-image">
             <div class="hero-image-wrapper">
-                <img src="{{ $about?->avatar_url ?? 'https://api.dicebear.com/7.x/initials/svg?seed=' . urlencode($about?->full_name ?? 'YE') }}" alt="{{ $about?->full_name }}">
+                @include('site.partials.optimized-image', [
+                    'src' => $about?->avatar_url ?? asset('images/default-avatar.svg'),
+                    'fallback' => $about?->avatar ? \App\Support\PublicUpload::url($about->avatar, asset('images/default-avatar.svg')) : asset('images/default-avatar.svg'),
+                    'srcset' => $about?->avatar_srcset ?? null,
+                    'alt' => $about?->full_name,
+                    'width' => 360,
+                    'height' => 360,
+                    'sizes' => '(max-width: 768px) 280px, 360px',
+                    'priority' => true,
+                    'lazy' => false,
+                ])
             </div>
             @if($about?->years_of_experience)
             <div class="floating-badge exp">
@@ -240,7 +256,7 @@
             </div>
             @if($section->image)
                 <div class="section-image">
-                    <img src="{{ $section->image_url }}" alt="{{ $section->title }}">
+                    <img src="{{ $section->image_url }}" alt="{{ $section->title }}" loading="lazy" decoding="async">
                 </div>
             @endif
         </div>

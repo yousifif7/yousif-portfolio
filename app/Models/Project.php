@@ -63,7 +63,15 @@ class Project extends Model
 
     public function getCoverImageUrlAttribute(): string
     {
-        return \App\Support\PublicUpload::url($this->cover_image, asset('images/project-placeholder.svg'));
+        return \App\Support\ImageOptimizer::url($this->cover_image, 960, asset('images/project-placeholder.svg'))
+            ?? \App\Support\PublicUpload::url($this->cover_image, asset('images/project-placeholder.svg'));
+    }
+
+    public function getCoverImageSrcsetAttribute(): ?string
+    {
+        return $this->cover_image
+            ? \App\Support\ImageOptimizer::srcset($this->cover_image, [480, 720, 960])
+            : null;
     }
 
     public function scopePublished($query)

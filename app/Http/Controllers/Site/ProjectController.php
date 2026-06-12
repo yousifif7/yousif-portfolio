@@ -34,7 +34,10 @@ class ProjectController extends Controller
             ->paginate(9)
             ->withQueryString();
 
-        $skills = Skill::active()->ordered()->get();
+        $skills = Skill::active()
+            ->ordered()
+            ->whereHas('projects', fn ($q) => $q->published())
+            ->get();
         $categories = Project::published()
             ->whereNotNull('category')
             ->distinct()

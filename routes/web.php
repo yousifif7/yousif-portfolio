@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DevelopmentOfferingController;
 use App\Http\Controllers\Admin\ExperienceController;
 use App\Http\Controllers\Admin\HireRequestController;
+use App\Http\Controllers\Admin\MaintenanceController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
 use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
@@ -70,6 +71,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Site settings
         Route::get('/settings', [SettingsController::class, 'edit'])->name('settings.edit');
         Route::put('/settings', [SettingsController::class, 'update'])->name('settings.update');
+
+        // Post-deploy maintenance (auth + admin only)
+        Route::get('/maintenance', [MaintenanceController::class, 'show'])->name('maintenance.index');
+        Route::post('/maintenance/post-deploy', [MaintenanceController::class, 'runPostDeploy'])->name('maintenance.post-deploy');
 
         // Profile / About
         Route::get('/about', [AdminAboutController::class, 'edit'])->name('about.edit');

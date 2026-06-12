@@ -19,7 +19,15 @@ class PublicUpload
         $filename = Str::random(40).'.'.strtolower($file->getClientOriginalExtension() ?: $file->extension());
         $file->move($targetDir, $filename);
 
-        return 'uploads/'.$folder.'/'.$filename;
+        $path = 'uploads/'.$folder.'/'.$filename;
+
+        $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'gif'], true)) {
+            $maxWidth = str_contains($folder, 'covers') ? 1200 : (str_contains($folder, 'avatar') ? 800 : 1600);
+            ImageOptimizer::optimizeOriginal($path, $maxWidth);
+        }
+
+        return $path;
     }
 
     public static function delete(?string $path): void
@@ -33,6 +41,7 @@ class PublicUpload
             if (is_file($full)) {
                 @unlink($full);
             }
+            ImageOptimizer::deleteVariants($path);
         }
     }
 

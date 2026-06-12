@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class About extends Model
 {
+    protected static function booted(): void
+    {
+        static::saved(fn () => \Illuminate\Support\Facades\Cache::forget('about.current'));
+        static::deleted(fn () => \Illuminate\Support\Facades\Cache::forget('about.current'));
+    }
+
     protected $fillable = [
         'full_name',
         'title',
@@ -27,13 +33,18 @@ class About extends Model
     public function getAvatarUrlAttribute(): string
     {
         if ($this->avatar) {
-            $relative = str_starts_with($this->avatar, 'uploads/') ? $this->avatar : 'storage/'.$this->avatar;
-            if (file_exists(public_path($relative))) {
-                return asset($relative);
-            }
+            return \App\Support\ImageOptimizer::url($this->avatar, 720, asset('images/default-avatar.svg'))
+                ?? \App\Support\PublicUpload::url($this->avatar, asset('images/default-avatar.svg'));
         }
 
-        return asset('images/default-avatar.png');
+        return asset('images/default-avatar.svg');
+    }
+
+    public function getAvatarSrcsetAttribute(): ?string
+    {
+        return $this->avatar
+            ? \App\Support\ImageOptimizer::srcset($this->avatar, [280, 360, 720])
+            : null;
     }
 
     public function getCvUrlAttribute(): ?string

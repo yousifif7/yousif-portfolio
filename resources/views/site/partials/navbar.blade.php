@@ -7,7 +7,7 @@
     <div class="navbar-inner">
         <a href="{{ route('home') }}" class="navbar-brand">
             @if($navLogo)
-                <img src="{{ $navLogo }}" alt="{{ $navName }}" class="navbar-logo" width="160" height="36">
+                <img src="{{ $navLogo }}" alt="{{ $navName }}" class="navbar-logo" width="160" height="36" decoding="async">
             @else
                 <span class="brand-dot"></span>
                 <span>{{ $navName }}</span>

@@ -3,7 +3,7 @@
 @section('title', 'Hire Me - ' . ($siteSettings['site_name'] ?? $siteAbout?->full_name ?? config('app.name')))
 @section('description', 'Hire a Laravel developer for CRMs, APIs, SaaS platforms, and custom web applications.')
 
-@push('head')
+@push('scripts')
 <script type="application/ld+json">
 {!! json_encode([
     '@@context' => 'https://schema.org',

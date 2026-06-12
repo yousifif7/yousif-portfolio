@@ -77,6 +77,10 @@
             <li><a href="{{ route('admin.settings.edit') }}" class="{{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
                 <i class="fas fa-sliders-h"></i> Site Settings
             </a></li>
+
+            <li><a href="{{ route('admin.maintenance.index') }}" class="{{ request()->routeIs('admin.maintenance.*') ? 'active' : '' }}">
+                <i class="fas fa-tools"></i> Post-Deploy
+            </a></li>
         </ul>
     </nav>
 </aside>

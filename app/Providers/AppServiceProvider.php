@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\About;
 use App\Models\Setting;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -25,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
         Paginator::defaultView('pagination::bootstrap-4');
 
         View::composer('site.*', function ($view) {
-            $view->with('siteAbout', About::first());
+            $view->with('siteAbout', Cache::rememberForever('about.current', fn () => About::first()));
             $view->with('siteSettings', Setting::all_keyed());
         });
 

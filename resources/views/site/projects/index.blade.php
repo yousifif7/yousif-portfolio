@@ -8,7 +8,7 @@
     @section('robots', 'noindex, follow')
 @endif
 
-@push('head')
+@push('scripts')
 <script type="application/ld+json">
 {!! json_encode([
     '@@context' => 'https://schema.org',

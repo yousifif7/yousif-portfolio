@@ -15,17 +15,34 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $q = $request->query('q');
+        $status = $request->query('status', 'all');
+        $sort = $request->query('sort', 'newest');
+        $dateFrom = $request->query('date_from');
+        $dateTo = $request->query('date_to');
+        $minViews = $request->query('min_views');
+
         $projects = Project::with('skills')
             ->when($q, function ($query) use ($q) {
-                $query->where('title', 'like', "%$q%")
-                      ->orWhere('client', 'like', "%$q%")
-                      ->orWhere('category', 'like', "%$q%");
+                $query->where(function ($inner) use ($q) {
+                    $inner->where('title', 'like', "%$q%")
+                          ->orWhere('client', 'like', "%$q%")
+                          ->orWhere('category', 'like', "%$q%");
+                });
             })
-            ->orderByDesc('id')
+            ->when($status === 'published', fn ($query) => $query->where('is_published', true))
+            ->when($status === 'draft', fn ($query) => $query->where('is_published', false))
+            ->when($status === 'featured', fn ($query) => $query->where('is_featured', true))
+            ->when($dateFrom, fn ($query) => $query->whereDate('completed_at', '>=', $dateFrom))
+            ->when($dateTo, fn ($query) => $query->whereDate('completed_at', '<=', $dateTo))
+            ->when($minViews !== null && $minViews !== '', fn ($query) => $query->where('views', '>=', (int) $minViews))
+            ->when($sort === 'oldest', fn ($query) => $query->orderBy('completed_at')->orderBy('id'))
+            ->when($sort === 'most_views', fn ($query) => $query->orderByDesc('views')->orderByDesc('id'))
+            ->when($sort === 'least_views', fn ($query) => $query->orderBy('views')->orderByDesc('id'))
+            ->when(! in_array($sort, ['oldest', 'most_views', 'least_views'], true), fn ($query) => $query->orderByDesc('completed_at')->orderByDesc('id'))
             ->paginate(15)
             ->withQueryString();
 
-        return view('admin.projects.index', compact('projects'));
+        return view('admin.projects.index', compact('projects', 'status'));
     }
 
     public function create()

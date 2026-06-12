@@ -3,7 +3,7 @@
 @section('title', 'Contact - ' . ($siteSettings['site_name'] ?? $siteAbout?->full_name ?? config('app.name')))
 @section('description', 'Get in touch — I\'m always open to discussing new projects, ideas, or opportunities.')
 
-@push('head')
+@push('scripts')
 <script type="application/ld+json">
 {!! json_encode([
     '@@context' => 'https://schema.org',
