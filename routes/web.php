@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ExperienceController;
 use App\Http\Controllers\Admin\HireRequestController;
 use App\Http\Controllers\Admin\MaintenanceController;
 use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
 use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\Admin\SectionController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\Site\AboutController;
 use App\Http\Controllers\Site\ContactController;
 use App\Http\Controllers\Site\HireController;
 use App\Http\Controllers\Site\HomeController;
+use App\Http\Controllers\Site\PostController;
 use App\Http\Controllers\Site\ProjectController;
 use App\Http\Controllers\Site\ReviewController;
 use App\Http\Controllers\Site\RobotsController;
@@ -36,6 +38,9 @@ Route::get('/reviews', fn () => redirect()->route('home')->withFragment('reviews
 Route::get('/about', [AboutController::class, 'show'])->name('about');
 Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
 Route::get('/projects/{project:slug}', [ProjectController::class, 'show'])->name('projects.show');
+Route::get('/blog/feed.xml', [PostController::class, 'feed'])->name('blog.feed');
+Route::get('/blog', [PostController::class, 'index'])->name('blog.index');
+Route::get('/blog/{post:slug}', [PostController::class, 'show'])->name('blog.show');
 Route::get('/contact', [ContactController::class, 'show'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::get('/hire', [HireController::class, 'show'])->name('hire');
@@ -87,6 +92,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Projects CRUD
         Route::resource('projects', AdminProjectController::class)->except('show');
 
+        // Blog posts CRUD
+        Route::resource('posts', AdminPostController::class)->except('show');
+
         // Skills CRUD
         Route::resource('skills', SkillController::class)->except('show');
 
@@ -106,6 +114,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/reviews', [AdminReviewController::class, 'index'])->name('reviews.index');
         Route::post('/reviews/{review}/approve', [AdminReviewController::class, 'approve'])->name('reviews.approve');
         Route::post('/reviews/{review}/reject', [AdminReviewController::class, 'reject'])->name('reviews.reject');
+        Route::post('/reviews/{review}/feature', [AdminReviewController::class, 'feature'])->name('reviews.feature');
+        Route::post('/reviews/{review}/unfeature', [AdminReviewController::class, 'unfeature'])->name('reviews.unfeature');
         Route::delete('/reviews/{review}', [AdminReviewController::class, 'destroy'])->name('reviews.destroy');
 
         // Hire requests

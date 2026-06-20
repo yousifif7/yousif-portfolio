@@ -14,6 +14,22 @@
     ],
 ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
 </script>
+@if(!empty($faqs))
+<script type="application/ld+json">
+{!! json_encode([
+    '@@context' => 'https://schema.org',
+    '@type' => 'FAQPage',
+    'mainEntity' => collect($faqs)->map(fn ($faq) => [
+        '@type' => 'Question',
+        'name' => $faq['question'],
+        'acceptedAnswer' => [
+            '@type' => 'Answer',
+            'text' => $faq['answer'],
+        ],
+    ])->values()->all(),
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+</script>
+@endif
 @endpush
 
 @section('content')
@@ -28,6 +44,9 @@
                 Custom web solutions powered by Laravel — from CRMs and APIs to full SaaS platforms.
                 Select what you need below and tell me about your project.
             </p>
+            <div class="section-header-badge">
+                @include('site.partials.availability-badge')
+            </div>
         </div>
 
         <div class="offerings-grid">
@@ -45,6 +64,35 @@
     </div>
 </section>
 
+@if(isset($featuredReview) && $featuredReview)
+<section class="section" id="testimonial">
+    <div class="container container-md">
+        @include('site.partials.featured-review', ['review' => $featuredReview])
+    </div>
+</section>
+@endif
+
+@if(!empty($faqs))
+<section class="section section-alt" id="faq">
+    <div class="container container-md">
+        <div class="section-header">
+            <div class="section-eyebrow">FAQ</div>
+            <h2 class="section-title">Common Questions</h2>
+            <p class="section-subtitle">Quick answers before you submit your request.</p>
+        </div>
+
+        <div class="hire-faq-list">
+            @foreach($faqs as $faq)
+                <details class="hire-faq-item">
+                    <summary>{{ $faq['question'] }}</summary>
+                    <p>{{ $faq['answer'] }}</p>
+                </details>
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
+
 {{-- Hire form --}}
 <section class="section section-alt" id="hire-form">
     <div class="container">
@@ -52,6 +100,18 @@
             <div class="hire-form-panel">
                 <h2 class="hire-form-title">Hire Me</h2>
                 <p class="hire-form-lead">Tell me about your project and I'll get back to you within 24–48 hours.</p>
+
+                <div class="form-notice">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Ready to start a project? You're in the right place. For general questions only, use the <a href="{{ route('contact') }}">Contact page</a>.</span>
+                </div>
+
+                @if($projectContext)
+                    <div class="form-notice form-notice-accent">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Interested in something like <strong>{{ $projectContext }}</strong>? Mention it in your project details below.</span>
+                    </div>
+                @endif
 
                 @if(session('success'))
                     <div class="alert alert-success"><i class="fas fa-check-circle"></i> {{ session('success') }}</div>
@@ -149,7 +209,7 @@
                     <div class="form-group">
                         <label for="hire_message">Project Details</label>
                         <textarea id="hire_message" name="message" class="form-control" rows="4"
-                            placeholder="Briefly describe your project, timeline, and any specific requirements...">{{ old('message') }}</textarea>
+                            placeholder="Briefly describe your project, timeline, and any specific requirements...">{{ old('message', $projectContext ? "I'm interested in a project similar to: {$projectContext}\n\n" : '') }}</textarea>
                         @error('message')<div class="form-error">{{ $message }}</div>@enderror
                     </div>
 

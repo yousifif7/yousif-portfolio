@@ -14,6 +14,7 @@ class StatsController extends Controller
         $topPages = $stats->topPages(10);
         $topReferrers = $stats->topReferrers(10);
         $topProjects = $stats->topProjects(10);
+        $topPosts = $stats->topPosts(10);
         $recentVisits = $stats->recentVisits(15);
 
         return view('admin.stats.index', compact(
@@ -22,6 +23,7 @@ class StatsController extends Controller
             'topPages',
             'topReferrers',
             'topProjects',
+            'topPosts',
             'recentVisits'
         ));
     }

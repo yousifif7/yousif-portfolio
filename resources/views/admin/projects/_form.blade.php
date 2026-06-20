@@ -21,6 +21,31 @@
     @error('description')<div class="form-error">{{ $message }}</div>@enderror
 </div>
 
+<div class="card" style="margin: 1.5rem 0; border: 1px dashed var(--gray-300);">
+    <div class="card-header"><strong><i class="fas fa-book-open"></i> Case Study (optional)</strong></div>
+    <div class="card-body">
+        <div class="form-text" style="margin-bottom: 1rem;">Structured Problem → Solution → Result blocks shown on the project page. Leave blank to hide.</div>
+
+        <div class="form-group">
+            <label class="form-label">The Problem</label>
+            <textarea name="problem" class="form-control" rows="4" placeholder="What challenge did the client face?">{{ old('problem', $project->problem ?? '') }}</textarea>
+            @error('problem')<div class="form-error">{{ $message }}</div>@enderror
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">The Solution</label>
+            <textarea name="solution" class="form-control" rows="4" placeholder="What did you build and how did you approach it?">{{ old('solution', $project->solution ?? '') }}</textarea>
+            @error('solution')<div class="form-error">{{ $message }}</div>@enderror
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label">The Result</label>
+            <textarea name="result" class="form-control" rows="4" placeholder="What outcomes were achieved? Metrics, improvements, etc.">{{ old('result', $project->result ?? '') }}</textarea>
+            @error('result')<div class="form-error">{{ $message }}</div>@enderror
+        </div>
+    </div>
+</div>
+
 <div class="form-row">
     <div class="form-group">
         <label class="form-label">Client</label>

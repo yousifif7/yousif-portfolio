@@ -23,7 +23,7 @@
         <div class="section-header">
             <div class="section-eyebrow">Get In Touch</div>
             <h2 class="section-title">Let's Work Together</h2>
-            <p class="section-subtitle">Have a project in mind or just want to say hi? Drop me a message and I'll get back to you as soon as possible.</p>
+            <p class="section-subtitle">Have a general question or want to say hi? Send a message here. If you want to hire me for a project, use the <a href="{{ route('hire') }}">Hire Me page</a> instead — it helps me respond faster with the right details.</p>
         </div>
 
         <div class="contact-grid">
@@ -76,6 +76,11 @@
             </div>
 
             <div class="contact-form-card">
+                <div class="form-notice">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Looking to hire me for a project? Use the <a href="{{ route('hire') }}">Hire Me form</a> — it's built for project inquiries.</span>
+                </div>
+
                 @if(session('success'))
                     <div class="alert alert-success"><i class="fas fa-check-circle"></i> {{ session('success') }}</div>
                 @endif

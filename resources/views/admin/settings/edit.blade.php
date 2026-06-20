@@ -115,13 +115,22 @@
             <div class="form-row">
                 <div class="form-group">
                     <label class="form-label">CTA Button Text</label>
-                    <input type="text" name="hero_cta_text" class="form-control" value="{{ $val('hero_cta_text') }}" placeholder="View Projects">
+                    <input type="text" name="hero_cta_text" class="form-control" value="{{ $val('hero_cta_text') }}" placeholder="Hire Me">
                 </div>
                 <div class="form-group">
                     <label class="form-label">CTA Button URL</label>
-                    <input type="url" name="hero_cta_url" class="form-control" value="{{ $val('hero_cta_url') }}" placeholder="https://...">
+                    <input type="url" name="hero_cta_url" class="form-control" value="{{ $val('hero_cta_url') }}" placeholder="{{ url('/hire') }}">
                     @error('hero_cta_url')<div class="form-error">{{ $message }}</div>@enderror
                 </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+                <div class="form-check">
+                    <input type="checkbox" id="available_for_hire" name="available_for_hire" value="1"
+                        {{ old('available_for_hire', ($settings['available_for_hire'] ?? '1') === '1') ? 'checked' : '' }}>
+                    <label for="available_for_hire">Show "Available for hire" badge on homepage, navbar, and hire page</label>
+                </div>
+                <div class="form-text">Turn off when you're fully booked or not taking new clients.</div>
             </div>
         </div>
     </div>

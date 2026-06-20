@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HireFormRequest;
+use App\Mail\HireRequestMail;
 use App\Models\DevelopmentOffering;
 use App\Models\HireRequest;
+use App\Models\Review;
 use App\Support\HireFormOptions;
 use App\Support\PublicUpload;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class HireController extends Controller
 {
@@ -17,12 +21,22 @@ class HireController extends Controller
         $countryCodes = HireFormOptions::countryCodes();
         $engagementModels = HireFormOptions::engagementModels();
         $projectPhases = HireFormOptions::projectPhases();
+        $projectContext = request()->query('project');
+        $projectContext = is_string($projectContext) ? trim(strip_tags($projectContext)) : null;
+        if ($projectContext === '') {
+            $projectContext = null;
+        }
+        $faqs = config('hire.faq', []);
+        $featuredReview = Review::approved()->featured()->first();
 
         return view('site.hire', compact(
             'offerings',
             'countryCodes',
             'engagementModels',
-            'projectPhases'
+            'projectPhases',
+            'projectContext',
+            'faqs',
+            'featuredReview',
         ));
     }
 
@@ -36,7 +50,7 @@ class HireController extends Controller
             $attachmentPath = PublicUpload::store($request->file('attachment'), 'hire');
         }
 
-        HireRequest::create([
+        $hireRequest = HireRequest::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'whatsapp_country_code' => $data['whatsapp_country_code'],
@@ -49,6 +63,19 @@ class HireController extends Controller
             'terms_agreed' => true,
             'ip_address' => $request->ip(),
         ]);
+
+        try {
+            $adminEmail = config('services.admin_email');
+            if ($adminEmail) {
+                $offeringTitles = DevelopmentOffering::whereIn('id', $hireRequest->offerings ?? [])
+                    ->pluck('title')
+                    ->all();
+
+                Mail::to($adminEmail)->send(new HireRequestMail($hireRequest, $offeringTitles));
+            }
+        } catch (\Throwable $e) {
+            Log::error('Failed to send hire request notification: '.$e->getMessage());
+        }
 
         return redirect()
             ->route('hire')

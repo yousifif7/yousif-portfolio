@@ -65,9 +65,9 @@
                 @if($heroCtaText && $heroCtaUrl)
                     <a href="{{ $heroCtaUrl }}" class="btn btn-primary btn-lg"><i class="fas fa-arrow-right"></i> {{ $heroCtaText }}</a>
                 @else
-                    <a href="{{ route('projects.index') }}" class="btn btn-primary btn-lg"><i class="fas fa-briefcase"></i> View Projects</a>
+                    <a href="{{ route('hire') }}" class="btn btn-primary btn-lg"><i class="fas fa-handshake"></i> Hire Me</a>
                 @endif
-                <a href="{{ route('contact') }}" class="btn btn-outline btn-lg"><i class="fas fa-paper-plane"></i> Get In Touch</a>
+                <a href="{{ route('projects.index') }}" class="btn btn-outline btn-lg"><i class="fas fa-briefcase"></i> View Projects</a>
                 @if($about?->cv_url)
                     <a href="{{ $about->cv_url }}" target="_blank" class="btn btn-light btn-lg"><i class="fas fa-download"></i> Download CV</a>
                 @endif
@@ -88,6 +88,7 @@
                     'lazy' => false,
                 ])
             </div>
+            @include('site.partials.availability-badge', ['variant' => 'floating'])
             @if($about?->years_of_experience)
             <div class="floating-badge exp">
                 <i class="fas fa-award"></i>

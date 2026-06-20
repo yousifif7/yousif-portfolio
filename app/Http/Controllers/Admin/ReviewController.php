@@ -45,9 +45,29 @@ class ReviewController extends Controller
         $review->update([
             'status' => 'rejected',
             'approved_at' => null,
+            'is_featured' => false,
         ]);
 
         return back()->with('success', 'Review rejected.');
+    }
+
+    public function feature(Review $review)
+    {
+        if ($review->status !== 'approved') {
+            return back()->with('error', 'Only approved reviews can be featured on the hire page.');
+        }
+
+        Review::where('is_featured', true)->update(['is_featured' => false]);
+        $review->update(['is_featured' => true]);
+
+        return back()->with('success', 'Review is now featured on the hire page.');
+    }
+
+    public function unfeature(Review $review)
+    {
+        $review->update(['is_featured' => false]);
+
+        return back()->with('success', 'Review removed from the hire page.');
     }
 
     public function destroy(Review $review)

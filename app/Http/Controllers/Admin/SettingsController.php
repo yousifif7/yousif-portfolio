@@ -28,6 +28,7 @@ class SettingsController extends Controller
         'hero_subheadline' => ['group' => 'hero', 'type' => 'text', 'rules' => ['nullable', 'string', 'max:500']],
         'hero_cta_text' => ['group' => 'hero', 'type' => 'text', 'rules' => ['nullable', 'string', 'max:50']],
         'hero_cta_url' => ['group' => 'hero', 'type' => 'url', 'rules' => ['nullable', 'url', 'max:500']],
+        'available_for_hire' => ['group' => 'hero', 'type' => 'boolean', 'rules' => ['nullable', 'boolean']],
 
         // SEO
         'seo_meta_title' => ['group' => 'seo', 'type' => 'text', 'rules' => ['nullable', 'string', 'max:191']],
@@ -68,6 +69,11 @@ class SettingsController extends Controller
         foreach (self::SCHEMA as $key => $meta) {
             if ($meta['type'] === 'image') {
                 $this->handleImage($request, $key, $meta);
+                continue;
+            }
+
+            if ($meta['type'] === 'boolean') {
+                Setting::set($key, $request->boolean($key) ? '1' : '0', $meta['type'], $meta['group']);
                 continue;
             }
 

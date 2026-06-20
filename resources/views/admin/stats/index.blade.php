@@ -52,6 +52,14 @@
             <div style="font-size: 0.8rem; color: var(--gray-500);">{{ number_format($summary['total_unique_project_views']) }} unique</div>
         </div>
     </div>
+    <div class="stat-card">
+        <div class="icon info"><i class="fas fa-newspaper"></i></div>
+        <div class="info">
+            <div class="label">Blog Post Views</div>
+            <div class="value">{{ number_format($summary['total_post_views']) }}</div>
+            <div style="font-size: 0.8rem; color: var(--gray-500);">{{ number_format($summary['total_unique_post_views']) }} unique</div>
+        </div>
+    </div>
 </div>
 
 <div class="card" style="margin-top: 1.5rem;">
@@ -155,6 +163,48 @@
                                 </td>
                                 <td class="actions">
                                     <a href="{{ route('admin.projects.edit', $p) }}" class="btn btn-outline btn-sm">Edit</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
+    </div>
+</div>
+
+<div class="card" style="margin-top: 1.5rem;">
+    <div class="card-header"><h2><i class="fas fa-fire"></i> Most Viewed Blog Posts</h2></div>
+    <div class="card-body">
+        @if($topPosts->isEmpty())
+            <div class="empty-state"><i class="fas fa-newspaper"></i><p>No blog posts yet</p></div>
+        @else
+            <div class="table-wrap">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Post</th>
+                            <th style="text-align:right;">Total Views</th>
+                            <th style="text-align:right;">Unique Views</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($topPosts as $i => $post)
+                            <tr>
+                                <td>{{ $i + 1 }}</td>
+                                <td><strong>{{ $post->title }}</strong></td>
+                                <td style="text-align:right;">{{ number_format($post->views) }}</td>
+                                <td style="text-align:right;">{{ number_format($post->unique_views) }}</td>
+                                <td>
+                                    <span class="badge {{ $post->is_published ? 'badge-success' : 'badge-secondary' }}">
+                                        {{ $post->is_published ? 'Published' : 'Draft' }}
+                                    </span>
+                                </td>
+                                <td class="actions">
+                                    <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-outline btn-sm">Edit</a>
                                 </td>
                             </tr>
                         @endforeach

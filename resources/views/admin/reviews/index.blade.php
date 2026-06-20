@@ -33,6 +33,9 @@
                             @else
                                 <span class="badge badge-secondary">Rejected</span>
                             @endif
+                            @if($review->is_featured)
+                                <div style="margin-top: 0.35rem;"><span class="badge badge-primary">Featured on Hire</span></div>
+                            @endif
                         </td>
                         <td>
                             <strong>{{ $review->name }}</strong>
@@ -68,6 +71,17 @@
                                     @csrf
                                     <button class="btn btn-secondary btn-sm" title="Unpublish"><i class="fas fa-eye-slash"></i></button>
                                 </form>
+                                @if($review->is_featured)
+                                    <form method="POST" action="{{ route('admin.reviews.unfeature', $review) }}" style="display:inline;">
+                                        @csrf
+                                        <button class="btn btn-secondary btn-sm" title="Remove from hire page"><i class="fas fa-star-half-alt"></i></button>
+                                    </form>
+                                @else
+                                    <form method="POST" action="{{ route('admin.reviews.feature', $review) }}" style="display:inline;">
+                                        @csrf
+                                        <button class="btn btn-primary btn-sm" title="Feature on hire page"><i class="fas fa-star"></i></button>
+                                    </form>
+                                @endif
                             @endif
                             <form method="POST" action="{{ route('admin.reviews.destroy', $review) }}" style="display:inline;" onsubmit="return confirm('Delete this review?')">
                                 @csrf @method('DELETE')

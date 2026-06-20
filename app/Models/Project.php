@@ -15,6 +15,9 @@ class Project extends Model
         'slug',
         'short_description',
         'description',
+        'problem',
+        'solution',
+        'result',
         'cover_image',
         'client',
         'category',
@@ -95,6 +98,11 @@ class Project extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function hasCaseStudy(): bool
+    {
+        return filled($this->problem) || filled($this->solution) || filled($this->result);
     }
 
     public function relatedProjects(int $limit = 3): Collection

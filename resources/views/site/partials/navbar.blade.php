@@ -20,7 +20,11 @@
             <li><a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">Home</a></li>
             <li><a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'active' : '' }}">About</a></li>
             <li><a href="{{ route('projects.index') }}" class="{{ request()->routeIs('projects.*') ? 'active' : '' }}">Projects</a></li>
+            <li><a href="{{ route('blog.index') }}" class="{{ request()->routeIs('blog.*') ? 'active' : '' }}">Blog</a></li>
             <li><a href="{{ route('contact') }}" class="{{ request()->routeIs('contact*') ? 'active' : '' }}">Contact</a></li>
+            @if(($siteSettings['available_for_hire'] ?? '1') !== '0')
+                <li class="nav-availability-item">@include('site.partials.availability-badge', ['variant' => 'compact'])</li>
+            @endif
             <li><a href="{{ route('hire') }}" class="btn btn-sm nav-hire-btn {{ request()->routeIs('hire*') ? 'btn-outline is-current' : 'btn-primary' }}">Hire Me</a></li>
         </ul>
     </div>

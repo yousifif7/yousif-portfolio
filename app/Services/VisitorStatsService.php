@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\PageVisit;
+use App\Models\Post;
 use App\Models\Project;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Carbon;
@@ -27,6 +28,8 @@ class VisitorStatsService
             'month_unique' => PageVisit::where('visited_at', '>=', $monthStart)->distinct('ip_address')->count('ip_address'),
             'total_project_views' => (int) Project::sum('views'),
             'total_unique_project_views' => (int) Project::sum('unique_views'),
+            'total_post_views' => (int) Post::sum('views'),
+            'total_unique_post_views' => (int) Post::sum('unique_views'),
         ];
     }
 
@@ -82,6 +85,14 @@ class VisitorStatsService
             ->orderByDesc('views')
             ->limit($limit)
             ->get(['id', 'title', 'slug', 'category', 'views', 'unique_views', 'is_published']);
+    }
+
+    public function topPosts(int $limit = 10): Collection
+    {
+        return Post::orderByDesc('unique_views')
+            ->orderByDesc('views')
+            ->limit($limit)
+            ->get(['id', 'title', 'slug', 'views', 'unique_views', 'is_published', 'published_at']);
     }
 
     public function recentVisits(int $limit = 15): Collection

@@ -29,6 +29,10 @@
                 <i class="fas fa-briefcase"></i> Projects
             </a></li>
 
+            <li><a href="{{ route('admin.posts.index') }}" class="{{ request()->routeIs('admin.posts.*') ? 'active' : '' }}">
+                <i class="fas fa-newspaper"></i> Blog Posts
+            </a></li>
+
             <li><a href="{{ route('admin.skills.index') }}" class="{{ request()->routeIs('admin.skills.*') ? 'active' : '' }}">
                 <i class="fas fa-code"></i> Skills
             </a></li>

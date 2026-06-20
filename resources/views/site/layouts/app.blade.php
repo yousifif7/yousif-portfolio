@@ -88,6 +88,8 @@
 
     @include('site.partials.footer')
 
+    @include('site.partials.sticky-hire-btn')
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const toggle = document.querySelector('.nav-toggle');

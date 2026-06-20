@@ -111,6 +111,32 @@
             </div>
         @endif
 
+        @if($project->hasCaseStudy())
+            <div class="case-study">
+                <h2 class="case-study-title">Case Study</h2>
+                <div class="case-study-grid">
+                    @if($project->problem)
+                        <div class="case-study-block">
+                            <div class="case-study-label"><i class="fas fa-exclamation-circle"></i> The Problem</div>
+                            <div class="case-study-body">{!! nl2br(e($project->problem)) !!}</div>
+                        </div>
+                    @endif
+                    @if($project->solution)
+                        <div class="case-study-block">
+                            <div class="case-study-label"><i class="fas fa-lightbulb"></i> The Solution</div>
+                            <div class="case-study-body">{!! nl2br(e($project->solution)) !!}</div>
+                        </div>
+                    @endif
+                    @if($project->result)
+                        <div class="case-study-block case-study-result">
+                            <div class="case-study-label"><i class="fas fa-chart-line"></i> The Result</div>
+                            <div class="case-study-body">{!! nl2br(e($project->result)) !!}</div>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        @endif
+
         {{-- Description --}}
         <div class="project-content">
             <h2>About this project</h2>
@@ -130,6 +156,19 @@
                 </div>
             </div>
         @endif
+
+        {{-- Hire CTA --}}
+        <div class="project-hire-cta">
+            <div class="project-hire-cta-inner">
+                <div>
+                    <h2>Want something like this?</h2>
+                    <p>Tell me about your project and let's build it together.</p>
+                </div>
+                <a href="{{ route('hire', ['project' => $project->title]) }}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-handshake"></i> Hire Me for a Similar Project
+                </a>
+            </div>
+        </div>
 
         {{-- Related --}}
         @if($related->isNotEmpty())

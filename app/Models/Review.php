@@ -14,12 +14,14 @@ class Review extends Model
         'company',
         'role',
         'status',
+        'is_featured',
         'ip_address',
         'approved_at',
     ];
 
     protected $casts = [
         'rating' => 'integer',
+        'is_featured' => 'boolean',
         'approved_at' => 'datetime',
     ];
 
@@ -31,6 +33,11 @@ class Review extends Model
     public function scopePending($query)
     {
         return $query->where('status', 'pending');
+    }
+
+    public function scopeFeatured($query)
+    {
+        return $query->where('is_featured', true);
     }
 
     public function scopeOrdered($query)
