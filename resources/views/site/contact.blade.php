@@ -127,6 +127,8 @@
                         @error('message')<div class="form-error">{{ $message }}</div>@enderror
                     </div>
 
+                    @include('site.partials.form-antispam')
+
                     <button type="submit" class="btn btn-primary btn-lg btn-block">
                         <i class="fas fa-paper-plane"></i> Send Message
                     </button>

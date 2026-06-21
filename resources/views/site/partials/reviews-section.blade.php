@@ -103,6 +103,8 @@
                         @error('content')<div class="form-error">{{ $message }}</div>@enderror
                     </div>
 
+                    @include('site.partials.form-antispam')
+
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-star"></i> Submit Review
                     </button>

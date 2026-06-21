@@ -11,7 +11,7 @@ class ReviewController extends Controller
     public function store(ReviewFormRequest $request)
     {
         $data = $request->validated();
-        unset($data['website']);
+        unset($data['website'], $data['form_token'], $data['cf-turnstile-response']);
 
         Review::create([
             'name' => $data['name'],

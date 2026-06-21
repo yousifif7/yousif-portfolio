@@ -43,7 +43,7 @@ class HireController extends Controller
     public function store(HireFormRequest $request)
     {
         $data = $request->validated();
-        unset($data['website']);
+        unset($data['website'], $data['form_token'], $data['cf-turnstile-response']);
 
         $attachmentPath = null;
         if ($request->hasFile('attachment')) {
