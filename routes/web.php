@@ -33,7 +33,9 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+Route::post('/reviews', [ReviewController::class, 'store'])
+    ->middleware(['throttle:review-form', 'reject.honeypot:review_success,home,reviews'])
+    ->name('reviews.store');
 Route::get('/reviews', fn () => redirect()->route('home')->withFragment('reviews'));
 Route::get('/about', [AboutController::class, 'show'])->name('about');
 Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
@@ -42,9 +44,13 @@ Route::get('/blog/feed.xml', [PostController::class, 'feed'])->name('blog.feed')
 Route::get('/blog', [PostController::class, 'index'])->name('blog.index');
 Route::get('/blog/{post:slug}', [PostController::class, 'show'])->name('blog.show');
 Route::get('/contact', [ContactController::class, 'show'])->name('contact');
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+Route::post('/contact', [ContactController::class, 'store'])
+    ->middleware(['throttle:contact-form', 'reject.honeypot'])
+    ->name('contact.store');
 Route::get('/hire', [HireController::class, 'show'])->name('hire');
-Route::post('/hire', [HireController::class, 'store'])->name('hire.store');
+Route::post('/hire', [HireController::class, 'store'])
+    ->middleware(['throttle:hire-form', 'reject.honeypot'])
+    ->name('hire.store');
 Route::get('/robots.txt', RobotsController::class)->name('robots');
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 

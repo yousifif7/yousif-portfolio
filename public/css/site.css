@@ -997,6 +997,10 @@ textarea.form-control {
     pointer-events: none;
 }
 
+.turnstile-wrap {
+    margin-bottom: 1rem;
+}
+
 .alert {
     padding: 1rem 1.25rem;
     border-radius: var(--radius);

@@ -19,7 +19,7 @@ class ContactController extends Controller
     public function store(ContactFormRequest $request)
     {
         $data = $request->validated();
-        unset($data['website']); // honeypot field
+        unset($data['website'], $data['form_token'], $data['cf-turnstile-response']);
 
         $contact = ContactMessage::create([
             'name' => $data['name'],
