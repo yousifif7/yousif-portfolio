@@ -15,6 +15,7 @@ class PostController extends Controller
         $sort = request('sort', 'newest');
 
         $posts = Post::query()
+            ->withViewCounts()
             ->when($status === 'published', fn ($q) => $q->where('is_published', true))
             ->when($status === 'draft', fn ($q) => $q->where('is_published', false))
             ->when(request('q'), function ($q, $search) {
@@ -54,6 +55,8 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
+        $post->loadCount('viewLogs as logged_unique_views');
+
         return view('admin.posts.edit', compact('post'));
     }
 

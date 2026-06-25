@@ -1,9 +1,9 @@
 @csrf
 
-@if(isset($post) && ($post->views > 0 || $post->unique_views > 0))
+@if(isset($post) && ($post->display_views > 0 || $post->display_unique_views > 0))
 <div class="form-text" style="margin-bottom: 1rem;">
-    <i class="fas fa-eye"></i> {{ number_format($post->views) }} total views
-    · {{ number_format($post->unique_views) }} unique
+    <i class="fas fa-eye"></i> {{ number_format($post->display_views) }} total views
+    · {{ number_format($post->display_unique_views) }} unique
 </div>
 @endif
 

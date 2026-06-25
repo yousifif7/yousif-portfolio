@@ -17,6 +17,7 @@ class PostController extends Controller
         $search = $request->query('q');
 
         $posts = Post::published()
+            ->withViewCounts()
             ->when($search, function ($q) use ($search) {
                 $q->where(function ($inner) use ($search) {
                     $inner->where('title', 'like', "%$search%")
@@ -36,8 +37,10 @@ class PostController extends Controller
         abort_unless($post->is_published, 404);
 
         $this->recordView($post, $request);
+        $post->loadCount('viewLogs as logged_unique_views');
 
         $recentPosts = Post::published()
+            ->withViewCounts()
             ->where('id', '!=', $post->id)
             ->ordered()
             ->limit(3)
@@ -97,6 +100,7 @@ class PostController extends Controller
             ]);
 
             $post->increment('unique_views');
+            $post->loadCount('viewLogs as logged_unique_views');
         } catch (\Throwable $e) {
             report($e);
         }

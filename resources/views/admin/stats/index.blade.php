@@ -196,8 +196,8 @@
                             <tr>
                                 <td>{{ $i + 1 }}</td>
                                 <td><strong>{{ $post->title }}</strong></td>
-                                <td style="text-align:right;">{{ number_format($post->views) }}</td>
-                                <td style="text-align:right;">{{ number_format($post->unique_views) }}</td>
+                                <td style="text-align:right;">{{ number_format($post->display_views) }}</td>
+                                <td style="text-align:right;">{{ number_format($post->display_unique_views) }}</td>
                                 <td>
                                     <span class="badge {{ $post->is_published ? 'badge-success' : 'badge-secondary' }}">
                                         {{ $post->is_published ? 'Published' : 'Draft' }}

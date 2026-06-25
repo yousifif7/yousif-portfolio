@@ -64,7 +64,7 @@
                 <span class="post-card-meta-sep">·</span>
                 <span>{{ $post->reading_time_minutes }} min read</span>
                 <span class="post-card-meta-sep">·</span>
-                <span><i class="fas fa-eye"></i> {{ number_format($post->views) }} views</span>
+                <span><i class="fas fa-eye"></i> {{ number_format($post->display_views) }} views</span>
             </div>
             <h1 class="blog-post-title">{{ $post->title }}</h1>
             <p class="blog-post-excerpt">{{ $post->excerpt }}</p>

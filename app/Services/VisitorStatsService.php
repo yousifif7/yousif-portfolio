@@ -16,6 +16,9 @@ class VisitorStatsService
         $today = Carbon::today();
         $weekStart = Carbon::today()->subDays(6);
         $monthStart = Carbon::today()->subDays(29);
+        $postMetrics = Post::query()
+            ->withViewCounts()
+            ->get(['id', 'views', 'unique_views']);
 
         return [
             'total_visits' => PageVisit::count(),
@@ -28,8 +31,8 @@ class VisitorStatsService
             'month_unique' => PageVisit::where('visited_at', '>=', $monthStart)->distinct('ip_address')->count('ip_address'),
             'total_project_views' => (int) Project::sum('views'),
             'total_unique_project_views' => (int) Project::sum('unique_views'),
-            'total_post_views' => (int) Post::sum('views'),
-            'total_unique_post_views' => (int) Post::sum('unique_views'),
+            'total_post_views' => (int) $postMetrics->sum(fn (Post $post) => $post->display_views),
+            'total_unique_post_views' => (int) $postMetrics->sum(fn (Post $post) => $post->display_unique_views),
         ];
     }
 
@@ -89,7 +92,8 @@ class VisitorStatsService
 
     public function topPosts(int $limit = 10): Collection
     {
-        return Post::orderByDesc('unique_views')
+        return Post::withViewCounts()
+            ->orderByDesc('unique_views')
             ->orderByDesc('views')
             ->limit($limit)
             ->get(['id', 'title', 'slug', 'views', 'unique_views', 'is_published', 'published_at']);

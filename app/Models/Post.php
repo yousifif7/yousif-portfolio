@@ -56,6 +56,27 @@ class Post extends Model
         return $this->hasMany(PostView::class);
     }
 
+    public function scopeWithViewCounts($query)
+    {
+        return $query->withCount('viewLogs as logged_unique_views');
+    }
+
+    public function getDisplayUniqueViewsAttribute(): int
+    {
+        $loggedUniqueViews = $this->logged_unique_views;
+
+        if ($loggedUniqueViews === null && $this->exists) {
+            $loggedUniqueViews = $this->viewLogs()->count();
+        }
+
+        return max((int) $this->unique_views, (int) ($loggedUniqueViews ?? 0));
+    }
+
+    public function getDisplayViewsAttribute(): int
+    {
+        return max((int) $this->views, $this->display_unique_views);
+    }
+
     public function getCoverImageUrlAttribute(): string
     {
         if (! $this->cover_image) {

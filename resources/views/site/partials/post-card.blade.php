@@ -18,9 +18,9 @@
             @endif
             <span class="post-card-meta-sep">·</span>
             <span>{{ $post->reading_time_minutes }} min read</span>
-            @if($post->views > 0)
+            @if($post->display_views > 0)
                 <span class="post-card-meta-sep">·</span>
-                <span><i class="fas fa-eye"></i> {{ number_format($post->views) }}</span>
+                <span><i class="fas fa-eye"></i> {{ number_format($post->display_views) }}</span>
             @endif
         </div>
         <h3><a href="{{ route('blog.show', $post) }}">{{ $post->title }}</a></h3>

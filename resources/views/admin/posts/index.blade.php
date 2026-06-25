@@ -69,9 +69,9 @@
                         <td>{{ $post->reading_time_minutes }} min</td>
                         <td>
                             <div class="views-cell" title="Total / unique views">
-                                <i class="fas fa-eye"></i> {{ number_format($post->views) }}
+                                <i class="fas fa-eye"></i> {{ number_format($post->display_views) }}
                                 <span class="views-sep">·</span>
-                                <i class="fas fa-user"></i> {{ number_format($post->unique_views) }}
+                                <i class="fas fa-user"></i> {{ number_format($post->display_unique_views) }}
                             </div>
                         </td>
                         <td>
