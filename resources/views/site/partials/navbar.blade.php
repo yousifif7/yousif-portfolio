@@ -2,6 +2,7 @@
     $logoPath = $siteSettings['site_logo'] ?? null;
     $navLogo = $logoPath ? \App\Support\PublicUpload::url($logoPath) : null;
     $navName = $siteSettings['site_name'] ?? $siteAbout?->full_name ?? config('app.name');
+    $navSubtitle = $siteSettings['site_tagline'] ?? $siteAbout?->title ?? 'Portfolio';
 @endphp
 <nav class="navbar">
     <div class="navbar-inner">
@@ -10,7 +11,10 @@
                 <img src="{{ $navLogo }}" alt="{{ $navName }}" class="navbar-logo" width="160" height="36" decoding="async">
             @else
                 <span class="brand-dot"></span>
-                <span>{{ $navName }}</span>
+                <span class="navbar-brand-copy">
+                    <span class="navbar-brand-name">{{ $navName }}</span>
+                    <span class="navbar-brand-subtitle">{{ $navSubtitle }}</span>
+                </span>
             @endif
         </a>
 

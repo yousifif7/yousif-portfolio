@@ -7,10 +7,10 @@
         <div class="footer-inner">
             <div>
                 <h4>{{ $footerName }}</h4>
-                <p style="margin-top: 0.5rem; max-width: 380px;">
+                <p class="footer-tagline">
                     {{ $footerTagline }}
                 </p>
-                <div style="margin-top: 1.25rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <div class="footer-socials">
                     @include('site.partials.social-icons')
                 </div>
             </div>

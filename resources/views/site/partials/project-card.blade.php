@@ -15,6 +15,16 @@
         @endif
     </div>
     <div class="body">
+        @if($project->category || $project->completed_at)
+            <div class="project-card-meta">
+                @if($project->category)
+                    <span><i class="fas fa-layer-group"></i> {{ $project->category }}</span>
+                @endif
+                @if($project->completed_at)
+                    <span><i class="fas fa-calendar"></i> {{ $project->completed_at->format('M Y') }}</span>
+                @endif
+            </div>
+        @endif
         <h3>{{ $project->title }}</h3>
         <p class="desc">{{ $project->short_description }}</p>
         @if($project->skills->isNotEmpty())

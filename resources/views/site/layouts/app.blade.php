@@ -82,7 +82,7 @@
 <body>
     @include('site.partials.navbar')
 
-    <main>
+    <main class="site-main">
         @yield('content')
     </main>
 

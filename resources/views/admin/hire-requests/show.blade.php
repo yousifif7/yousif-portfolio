@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<div class="grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+<div class="grid-2">
     <div class="card">
         <div class="card-header"><strong>Contact</strong></div>
         <div style="padding: 1.25rem;">

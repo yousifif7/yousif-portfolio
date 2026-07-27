@@ -72,6 +72,11 @@
                     <a href="{{ $about->cv_url }}" target="_blank" class="btn btn-light btn-lg"><i class="fas fa-download"></i> Download CV</a>
                 @endif
             </div>
+            <div class="hero-trust">
+                <span class="hero-trust-pill"><i class="fas fa-code"></i> Laravel Development</span>
+                <span class="hero-trust-pill"><i class="fas fa-database"></i> CRMs & Admin Panels</span>
+                <span class="hero-trust-pill"><i class="fas fa-plug"></i> APIs & Integrations</span>
+            </div>
         </div>
 
         <div class="hero-image">

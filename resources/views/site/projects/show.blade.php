@@ -118,19 +118,19 @@
                     @if($project->problem)
                         <div class="case-study-block">
                             <div class="case-study-label"><i class="fas fa-exclamation-circle"></i> The Problem</div>
-                            <div class="case-study-body">{!! nl2br(e($project->problem)) !!}</div>
+                            <div class="case-study-body prose">{!! format_text($project->problem) !!}</div>
                         </div>
                     @endif
                     @if($project->solution)
                         <div class="case-study-block">
                             <div class="case-study-label"><i class="fas fa-lightbulb"></i> The Solution</div>
-                            <div class="case-study-body">{!! nl2br(e($project->solution)) !!}</div>
+                            <div class="case-study-body prose">{!! format_text($project->solution) !!}</div>
                         </div>
                     @endif
                     @if($project->result)
                         <div class="case-study-block case-study-result">
                             <div class="case-study-label"><i class="fas fa-chart-line"></i> The Result</div>
-                            <div class="case-study-body">{!! nl2br(e($project->result)) !!}</div>
+                            <div class="case-study-body prose">{!! format_text($project->result) !!}</div>
                         </div>
                     @endif
                 </div>
@@ -138,9 +138,9 @@
         @endif
 
         {{-- Description --}}
-        <div class="project-content">
+        <div class="project-content prose">
             <h2>About this project</h2>
-            <div>{!! nl2br(e($project->description)) !!}</div>
+            <div>{!! format_text($project->description) !!}</div>
         </div>
 
         {{-- Gallery --}}

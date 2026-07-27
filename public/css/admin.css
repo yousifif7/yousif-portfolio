@@ -334,6 +334,8 @@ a:hover { color: var(--primary-dark); }
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     margin-bottom: 1.5rem;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .card-header {
@@ -473,14 +475,33 @@ textarea.form-control { min-height: 120px; resize: vertical; }
 .form-text { font-size: 0.8rem; color: var(--gray-500); margin-top: 0.25rem; }
 .form-error { color: var(--danger); font-size: 0.82rem; margin-top: 0.25rem; }
 
-/* ===== Tables ===== */
+/* ===== Tables (global — all admin pages via layouts/app) ===== */
+.card,
+.card-body,
+.content {
+    min-width: 0;
+    max-width: 100%;
+}
+
 .table-wrap {
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     border-radius: var(--radius);
+    max-width: 100%;
+    width: 100%;
+}
+
+/* Fallback when a table is not wrapped in .table-wrap */
+.card:has(> table.table),
+.card-body:has(> table.table),
+.content:has(> table.table) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .table {
     width: 100%;
+    min-width: 780px;
     border-collapse: collapse;
     background: white;
 }
@@ -490,6 +511,7 @@ textarea.form-control { min-height: 120px; resize: vertical; }
     text-align: left;
     border-bottom: 1px solid var(--gray-200);
     font-size: 0.9rem;
+    vertical-align: middle;
 }
 
 .table th {
@@ -499,13 +521,40 @@ textarea.form-control { min-height: 120px; resize: vertical; }
     font-size: 0.78rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    white-space: nowrap;
 }
 
 .table tbody tr:hover { background: var(--gray-100); }
 
-.table td.actions {
+.table td.actions,
+.table th.actions {
     white-space: nowrap;
     text-align: right;
+}
+
+.table td:has(.badge),
+.table td:has(.views-cell),
+.table .col-status,
+.table .col-views,
+.table .col-date,
+.table .col-actions {
+    white-space: nowrap;
+}
+
+.views-cell {
+    white-space: nowrap;
+    font-size: 0.8rem;
+    color: var(--gray-600);
+}
+
+.views-cell i {
+    color: var(--gray-400);
+    font-size: 0.72rem;
+}
+
+.views-sep {
+    color: var(--gray-300);
+    margin: 0 0.15rem;
 }
 
 /* ===== Badges ===== */
@@ -517,7 +566,10 @@ textarea.form-control { min-height: 120px; resize: vertical; }
     text-transform: uppercase;
     letter-spacing: 0.5px;
     display: inline-block;
+    white-space: nowrap;
+    max-width: none;
 }
+.badge-primary { background: rgba(99, 102, 241, 0.15); color: #4338ca; }
 .badge-success { background: rgba(16, 185, 129, 0.15); color: #047857; }
 .badge-warning { background: rgba(245, 158, 11, 0.15); color: #b45309; }
 .badge-danger { background: rgba(239, 68, 68, 0.15); color: #b91c1c; }
@@ -821,6 +873,7 @@ textarea.form-control { min-height: 120px; resize: vertical; }
 
 .projects-table {
     table-layout: fixed;
+    min-width: 920px;
 }
 
 .projects-table th,
@@ -949,10 +1002,26 @@ textarea.form-control { min-height: 120px; resize: vertical; }
 }
 
 .table td {
-    overflow-wrap: anywhere;
-    word-break: break-word;
+    overflow-wrap: break-word;
+    word-break: normal;
+}
+
+.page-header .title {
+    min-width: 0;
+    flex: 1 1 auto;
 }
 
 .page-header .title h2 {
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
+}
+
+/* Keep admin action button groups from wrapping oddly inside tables */
+.table td.actions .btn,
+.table .actions .btn {
+    flex-shrink: 0;
+}
+
+.table td.actions form,
+.table .actions form {
+    display: inline;
 }
